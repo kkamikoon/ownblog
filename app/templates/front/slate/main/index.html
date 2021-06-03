@@ -1,0 +1,14 @@
+{% extends '/front/' + get_config('front_theme') + '/main/layout.html' %}
+{% block content %}
+
+<div class="col-md-12">
+  <div class="jumbotron">
+    <img src="{{url_for('main.image', img='dokkaebi_yelling.gif')}}" class="mx-auto d-block">
+    <br>
+    <h1 class="display-3 text-center">
+      Hello, <span class="display-5">it's kkamikoon</span>
+    </h1>
+  </div>
+</div>
+
+{% endblock %}

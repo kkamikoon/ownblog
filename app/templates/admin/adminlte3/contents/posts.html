@@ -1,0 +1,60 @@
+{% extends "/admin/" + get_config('admin_theme') + "/main/layout.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="card-title">Posts List</h3>
+          </div>
+          <div class="col-md-6">
+            <a href="/admin/posts/add" class="btn btn-sm btn-outline-warning float-right" role="button" aria-disabled="true">
+              <b>
+                + Post
+              </b>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <table id="posts_table" class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Index</th>
+              <th>Category</th>
+              <th>Title</th>
+              <th>Public</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Index</th>
+              <th>Category</th>
+              <th>Title</th>
+              <th>Public</th>
+              <th>Action</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for post in posts %}
+            <tr>
+              <td>{{post.idx}}</td>
+              <td>{{get_category(post.category_idx)}}</td>
+              <td>{{post.title}}</td>
+              <td>
+                <button class="btn btn-block btn-outline-{% if post.hidden == True %}secondary{% else %}success{% endif %} btn-sm" onclick="javascript:post_hidden({{post.idx}});" id="post_hidden{{post.idx}}">{% if post.hidden == True %}Open{% else %}Hidden{% endif %}</button>
+              </td>
+              <td>
+                <a href="/admin/posts/{{post.idx}}" class="btn btn-block btn-outline-warning btn-sm" role="button" aria-disabled="true">Detail</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

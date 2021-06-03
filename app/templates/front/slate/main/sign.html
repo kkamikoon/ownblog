@@ -1,0 +1,17 @@
+{% extends '/front/' + get_config('front_theme') + '/main/layout.html' %}
+{% block sign %}
+
+  <div class="section-sign m-auto">
+    <h1>Sign In</h1>
+    <form class="sign-in-form" action="/sign/in" method="POST">
+      <div class="form-group">
+        <input type="text" class="form-control" name="username" placeholder="User-ID : [a-zA-Z0-9]{8,}" style="width: 100% !important;" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" name="password" placeholder="Pass-WD : [a-zA-Z0-9]{8,}" style="width: 100% !important;">
+      </div>
+      <button type="submit" class="btn btn-secondary btn-block">Submit</button>
+    </form>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "/admin/" + get_config('admin_theme') + "/main/layout.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <form method="POST" action="/admin/posts/add">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-4">
+              <label>Title</label>
+              <input type="text" class="form-control" name="title" value="" placeholder="Title of this post">
+            </div>
+            <div class="col-md-4">
+              <label>Category</label>
+              <select class="form-control" name="category_idx">
+                {% if get_categories() | length == 0 %}
+                <option value="">No categories...</option>
+                {% else %}
+                {% for category in get_categories() %}
+                <option value="{{category.idx}}">{{category.name}}</option>
+                {% endfor %}
+                {% endif %}
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label>Hidden</label>
+              <select class="form-control" name="hidden">
+                <option value="0" selected="selected">Open</option>
+                <option value="1">Hidden</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <textarea name="body" id="editor"></textarea>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

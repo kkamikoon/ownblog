@@ -1,0 +1,138 @@
+{% extends "/admin/" + get_config('admin_theme') + "/main/layout.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="card-title">Users List</h3>
+          </div>
+          <div class="col-md-6">
+            <button type="button" class="btn btn-sm btn-outline-warning float-right" data-toggle="modal" data-target="#user_add">
+              <b>+ User</b>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <table id="hosts_table" class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Index</th>
+              <th>User ID</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Admin</th>
+              <th>Verified</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Index</th>
+              <th>User ID</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Admin</th>
+              <th>Verified</th>
+              <th>Actions</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for user in users %}
+            <tr>
+              <td>{{user.idx}}</td>
+              <td>{{user.uid}}</td>
+              <td>{{user.name}}</td>
+              <td>
+                <span class="badge {% if get_attach(user.attach) == 'Admin' %}bg-success{% else %}bg-secondary{% endif %}">{{get_attach(user.attach)}}</span>
+              </td>
+              <td>
+                <span class="badge {% if get_attach(user.attach) == 'Admin' %}bg-success{% else %}bg-secondary{% endif %}">{{user.admin}}</span>
+              </td>
+              <td>
+                <button class="btn btn-block btn-outline-{% if user.verified == True %}success{% else %}secondary{% endif %} btn-sm" onclick="javascript:user_verification({{user.idx}});" id="user_verification_{{user.idx}}">{% if user.verified == True %}True{% else %}False{% endif %}</button>
+              </td>
+              <td>
+                <a href="/admin/users/{{user.idx}}" class="btn btn-block btn-outline-warning btn-sm" role="button" aria-disabled="true">Detail</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- User Add Modal -->
+<div class="modal fade" id="user_add" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add User</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="/admin/users/add">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>User ID</label>
+            <input type="text" class="form-control" name="uid"  placeholder="User ID" autocomplete="off" required>
+          </div>
+
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" name="name" placeholder="User Name" autocomplete="off" required>
+          </div>
+
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" name="password"  placeholder="User password"  autocomplete="off" required>
+          </div>
+
+          <div class="form-group">
+            <label>Confirm</label>
+            <input type="password" class="form-control" name="confirm"   placeholder="Password confirm"  autocomplete="off" required>
+          </div>
+
+          <div class="form-group">
+            <label>Attach</label>
+            <select class="form-control selectpicker" data-style="btn btn-link" name="attach" required>
+              {% for attach in attaches %}
+              <option value="{{attach.idx}}">{{attach.type}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <div class="custom-control custom-checkbox d-inline ml-2">
+              <input class="custom-control-input custom-control-input-warning" type="checkbox" value="" name="hidden">
+              <label class="custom-control-label">Hidden</label>
+            </div>
+            <div class="custom-control custom-checkbox d-inline ml-2">
+              <input class="custom-control-input custom-control-input-warning" type="checkbox" value="" name="banned">
+              <label class="custom-control-label">Banned</label>
+            </div> 
+            <div class="custom-control custom-checkbox d-inline ml-2">
+              <input class="custom-control-input custom-control-input-warning" type="checkbox" value="" name="verified">
+              <label class="custom-control-label">Verified</label>
+            </div> 
+            <div class="custom-control custom-checkbox d-inline ml-2">
+              <input class="custom-control-input custom-control-input-warning" type="checkbox" value="" name="admin">
+              <label class="custom-control-label">Admin</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-warning">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /.modal -->
+{% endblock %}

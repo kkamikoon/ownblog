@@ -1,0 +1,47 @@
+<script src="{{url_for('main.themes', theme='front', vendor=get_config('front_theme'), path='js/bootstrap-notify.js')}}"></script>
+
+<!-- Sign In Notification Start -->
+<script>
+    categories = {
+      "error"     : "danger",
+      "warning"   : "warning",
+      "info"      : "info",
+      "success"   : "success",
+    };
+
+    icons      = {
+      "error"     : "icofont-error",
+      "warning"   : "icofont-warning",
+      "info"      : "icofont-alarm",
+      "success"   : "icofont-check-circled",
+    };
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {%- if messages -%}
+    {% for category, message in messages %}
+    {% if category == 'error' %}
+    {% endif %}
+    $.notify( {
+                icon:   icons['{{category}}'],
+                message:"{{ message }}",
+              },
+              {
+                type:   categories['{{category}}'],
+                delay:  10,
+                timer:  0,
+                placement: {
+                    from:  "bottom",
+                    align: "left",
+                },
+                animate: {
+                    enter: 'animate__bounceIn',
+                    exit:  'animate__bounceOut',
+                },
+              }
+            );
+    {% endfor %}
+    {%- endif -%}
+    {% endwith %}
+
+</script>
+<!-- Sign In Notification End -->

@@ -1,0 +1,8 @@
+{% extends '/front/' + get_config('front_theme') + '/main/layout.html' %}
+{% block content %}
+
+<div class="col-md-12">
+  {{md | markdown}}
+</div>
+
+{% endblock %}
