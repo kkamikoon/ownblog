@@ -23,7 +23,10 @@ from app.utils.url     import (
     current_endpoint
 )
 
-from app.utils.blog    import get_categories
+from app.utils.blog    import (
+    get_categories,
+    get_category
+)
 from app.utils.config  import is_setup
 from app.utils         import get_config
 from app.utils.logging import access_logging
@@ -31,15 +34,27 @@ from app.utils.logging import access_logging
 from app.models        import db
 
 def init_template_globals(app):
+    # Init utils
     app.jinja_env.globals.update(get_config=get_config)
-    app.jinja_env.globals.update(get_current_user=get_current_user)
+
+    # Config utils
+    app.jinja_env.globals.update(is_setup=is_setup)
+
+    # User utils
     app.jinja_env.globals.update(get_attach=get_attach)
     app.jinja_env.globals.update(authed=authed)
     app.jinja_env.globals.update(is_admin=is_admin)
-    app.jinja_env.globals.update(is_setup=is_setup)
+    app.jinja_env.globals.update(get_current_user=get_current_user)
+
+    # Security utils
     app.jinja_env.globals.update(in_whitelist=in_whitelist)
-    app.jinja_env.globals.update(current_url=current_url)
+
+    # Blog utils
     app.jinja_env.globals.update(get_categories=get_categories)
+    app.jinja_env.globals.update(get_category=get_category)
+
+    # URL utils
+    app.jinja_env.globals.update(current_url=current_url)
     app.jinja_env.globals.update(current_endpoint=current_endpoint)
 
     @app.template_filter("endpoint_for_header")

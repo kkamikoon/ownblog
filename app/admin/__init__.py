@@ -25,7 +25,6 @@ from app.admin              import configs
 from app.admin              import logs
 from app.admin              import posts
 from app.admin              import categories
-from app.admin              import test
 
 @admin.route("/admin", methods=['GET'])
 @admin_only
@@ -38,7 +37,8 @@ def index():
 def dashboard():
     if is_admin():
         user = get_current_user()
-        return render_template( f"/admin/{get_config('admin_theme')}/main/dashboard.html", user=user)
+        return render_template( f"/admin/{get_config('admin_theme')}/main/dashboard.html",
+                                user=user)
     else:
         return redirect(url_for("main.sign"))
 

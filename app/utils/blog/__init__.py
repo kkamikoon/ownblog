@@ -12,6 +12,10 @@ def get_categories():
     return db.session.query( Categories.name ).all()
 
 
+def get_category(idx):
+    return Categories.query.filter_by(idx=idx).first()
+
+
 def get_tmp_dir():
     tmp = safe_join(app.root_path, f"static", f"front", f"themes", get_config("front_theme"), f"tmp_{session.get('nonce')}")
     

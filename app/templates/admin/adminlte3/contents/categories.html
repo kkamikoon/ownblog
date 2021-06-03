@@ -37,7 +37,7 @@
               <td>{{category.idx}}</td>
               <td>{{category.name}}</td>
               <td>
-                <button class="btn btn-block btn-outline-{% if category.hidden == False %}success{% else %}secondary{% endif %} btn-sm" onclick="javascript:category_hidden({{category.idx}});" id="category_hidden_{{user.idx}}">{% if category.hidden == True %}True{% else %}False{% endif %}</button>
+                <button class="btn btn-block btn-outline-{% if category.hidden == False %}success{% else %}secondary{% endif %} btn-sm" onclick="javascript:category_hidden({{category.idx}});" id="category_hidden_{{category.idx}}">{% if category.hidden == True %}True{% else %}False{% endif %}</button>
               </td>
             </tr>
             {% endfor %}
@@ -50,7 +50,7 @@
 
 <!-- User Add Modal -->
 <div class="modal fade" id="category_add" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Category Add</h4>
@@ -71,40 +71,9 @@
           </div>
 
           <div class="form-group">
-            <label>Password</label>
-            <input type="password" class="form-control" name="password"  placeholder="User password"  autocomplete="off" required>
-          </div>
-
-          <div class="form-group">
-            <label>Confirm</label>
-            <input type="password" class="form-control" name="confirm"   placeholder="Password confirm"  autocomplete="off" required>
-          </div>
-
-          <div class="form-group">
-            <label>Attach</label>
-            <select class="form-control selectpicker" data-style="btn btn-link" name="attach" required>
-              {% for attach in attaches %}
-              <option value="{{attach.idx}}">{{attach.type}}</option>
-              {% endfor %}
-            </select>
-          </div>
-
-          <div class="form-group">
             <div class="custom-control custom-checkbox d-inline ml-2">
               <input class="custom-control-input custom-control-input-warning" type="checkbox" value="" name="hidden">
               <label class="custom-control-label">Hidden</label>
-            </div>
-            <div class="custom-control custom-checkbox d-inline ml-2">
-              <input class="custom-control-input custom-control-input-warning" type="checkbox" value="" name="banned">
-              <label class="custom-control-label">Banned</label>
-            </div> 
-            <div class="custom-control custom-checkbox d-inline ml-2">
-              <input class="custom-control-input custom-control-input-warning" type="checkbox" value="" name="verified">
-              <label class="custom-control-label">Verified</label>
-            </div> 
-            <div class="custom-control custom-checkbox d-inline ml-2">
-              <input class="custom-control-input custom-control-input-warning" type="checkbox" value="" name="admin">
-              <label class="custom-control-label">Admin</label>
             </div>
           </div>
         </div>
