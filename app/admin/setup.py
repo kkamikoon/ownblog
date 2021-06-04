@@ -140,8 +140,17 @@ def setup():
             set_config('domain_check',  domain_check)
 
             # Image Upload Directory ------------------------------
-            set_config('upload_dir',    f"{safe_join(app.root_path, 'static', 'front', 'themes', get_config('front_theme'), 'images')}")
+            upload_dir  = safe_join(app.root_path, 'static', 'front')
+            set_config('upload_dir',    upload_dir)
+            
+            # image directory setup
+            if not os.path.isdir(upload_dir + "/images"):
+                os.mkdir(upload_dir + "/images")
 
+            # post directory setup
+            if not os.path.isdir(upload_dir + "/posts"):
+                os.mkdir(upload_dir + "/posts")
+                
             # Setup completed
             set_config("setup", True)
 

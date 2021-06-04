@@ -6,12 +6,7 @@
       <div class="card">
         <div class="card-header">
           <div class="row">
-            <div class="col-md-4">
-              <label>Title</label>
-              <input type="text" class="form-control" name="title" value="" placeholder="Title of this post">
-            </div>
-            <div class="col-md-4">
-              <label>Category</label>
+            <div class="mb-3 col-md-2 markdown-category">
               <select class="form-control" name="category_idx">
                 {% if get_categories() | length == 0 %}
                 <option value="">No categories...</option>
@@ -22,12 +17,11 @@
                 {% endif %}
               </select>
             </div>
-            <div class="col-md-4">
-              <label>Hidden</label>
-              <select class="form-control" name="hidden">
-                <option value="0" selected="selected">Open</option>
-                <option value="1">Hidden</option>
-              </select>
+            <div class="col-md-12">
+              <input type="text" class="markdown-title form-control" name="title" value="" placeholder="Title" autocomplete="off">
+            </div>
+            <div class="col-md-12">
+              <input type="text" class="markdown-abstract form-control" name="abstract" value="" placeholder="Abstract (Optional)" autocomplete="off">
             </div>
           </div>
         </div>

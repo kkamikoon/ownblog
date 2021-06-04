@@ -17,10 +17,11 @@ class Users(db.Model):
     attach      = db.Column(db.Integer, db.ForeignKey('users_attach.idx', ondelete="SET NULL", onupdate="CASCADE"))
     
     # Supplementary attributes
-    hidden      = db.Column(db.Boolean, default=False)
-    banned      = db.Column(db.Boolean, default=False)
-    verified    = db.Column(db.Boolean, default=False)
-    admin       = db.Column(db.Boolean, default=False)
+    hidden      = db.Column(db.Boolean,     default=False)
+    banned      = db.Column(db.Boolean,     default=False)
+    verified    = db.Column(db.Boolean,     default=False)
+    admin       = db.Column(db.Boolean,     default=False)
+    date        = db.Column(db.DateTime,    default=datetime.datetime.utcnow)
 
     # def __repr__(self):
     #     return  f"<Users {self.idx},{self.name},{self.password},{self.email},{self.type},{self.hidden},{self.banned},{self.verified},{self.admin}>"
@@ -31,12 +32,12 @@ class Attach(db.Model):
     __table_args__  = {'mysql_collate' : "utf8_general_ci"}
 
     # Core Attributes
-    idx         = db.Column(db.Integer, primary_key=True)
+    idx         = db.Column(db.Integer,     primary_key=True)
     type        = db.Column(db.String(128))
     description = db.Column(db.String(2048))
 
     # Supplementary attributes
-    hidden      = db.Column(db.Boolean, default=False)
+    hidden      = db.Column(db.Boolean,     default=False)
 
 
 class Configs(db.Model):
@@ -44,7 +45,7 @@ class Configs(db.Model):
     __table_args__  = {'mysql_collate' : "utf8_general_ci"}
 
     # Core Attributes
-    idx         = db.Column(db.Integer, primary_key=True)
+    idx         = db.Column(db.Integer,     primary_key=True)
     key         = db.Column(db.String(128))
     value       = db.Column(db.String(256))
 
@@ -69,12 +70,16 @@ class Posts(db.Model):
     __table_args__  = {'mysql_collate' : "utf8_general_ci"}
 
     # Core Attributes
-    idx         = db.Column(db.Integer, primary_key=True)
-    category_idx= db.Column(db.Integer, db.ForeignKey('categories.idx', ondelete="SET NULL", onupdate="CASCADE"))
+    idx         = db.Column(db.Integer,     primary_key=True)
+    category_idx= db.Column(db.Integer,     db.ForeignKey(  'categories.idx',
+                                                            ondelete="SET NULL",
+                                                            onupdate="CASCADE"))
     title       = db.Column(db.String(256))
     abstract    = db.Column(db.String(512))
-    filename    = db.Column(db.String(512))
-    hidden      = db.Column(db.Integer, default=True)
+    filename    = db.Column(db.String(512), unique=True)
+    filedir     = db.Column(db.String(2048))
+    hidden      = db.Column(db.Integer,     default=True)
+    date        = db.Column(db.DateTime,    default=datetime.datetime.utcnow)
 
 
 class Themes(db.Model):    
@@ -92,7 +97,7 @@ class Logs(db.Model):
     __table_args__  = {'mysql_collate' : "utf8_general_ci"}
 
     # Core Attributes
-    idx         = db.Column(db.Integer, primary_key=True)
+    idx         = db.Column(db.Integer,     primary_key=True)
     user_idx    = db.Column(db.Integer)
     name        = db.Column(db.String(128))
     host        = db.Column(db.String(128))
@@ -100,4 +105,4 @@ class Logs(db.Model):
     path        = db.Column(db.String(4096))
     cookie      = db.Column(db.String(1024))
     endpoint    = db.Column(db.String(256))
-    time        = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    date        = db.Column(db.DateTime,    default=datetime.datetime.utcnow)

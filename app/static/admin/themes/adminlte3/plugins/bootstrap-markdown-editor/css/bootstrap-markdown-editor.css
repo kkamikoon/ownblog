@@ -44,7 +44,8 @@ body.md-body-fullscreen,html.md-body-fullscreen{
 }
 .md-toolbar{
     padding:10px;
-    background:#6c757d;
+    /* background:#6c757d; */
+    background:#23262a;
     /*border:1px solid #d8d8d8;
     */
     border-bottom:none;

@@ -10,10 +10,17 @@ from flask  import (
     render_template
 )
 
+from sqlalchemy.exc         import IntegrityError
+
 from app.utils              import get_config
 from app.utils.decorators   import admin_only
 from app.models             import db, Posts, Categories
-from app.utils.blog         import get_upload_dir, clear_tmp_dir
+from app.utils.blog         import (
+    get_img_upload_dir,
+    get_post_upload_dir,
+    clear_tmp_dir
+    get_images_path
+)
 
 admin = Blueprint("admin", __name__)
 
@@ -30,6 +37,7 @@ def posts():
     return render_template( f"/admin/{get_config('admin_theme')}/contents/posts.html",
                             posts=posts)
 
+
 @admin.route("/admin/posts/add", methods=['GET', 'POST'])
 @admin_only
 def posts_add():
@@ -42,18 +50,37 @@ def posts_add():
     if request.method == "POST":
         title           = request.form.get("title")
         category_idx    = request.form.get("category_idx")
-        hidden          = request.form.get("hidden")
         body            = request.form.get("body")
-
-        # print(f"[=] title        : {title}")
-        # print(f"[=] category_idx : {category_idx}")
-        # print(f"[=] hidden       : {hidden}")
-        # print(f"[=] body         : {body}")
+        abstract        = request.form.get("abstract")
 
         if category_idx == "":
             flash(message="Be calm... Your post is just saved in temp. Set your categories first.", category="warning")
             return redirect(url_for("admin.categories"))
+        
+        # markdown file saving        
+        file_for_upload = get_upload_dir(title)
 
+        with open(file_for_upload, "w") as upload_file_w:
+            upload_file_w.write(body)
+
+        post    = Posts(title=title,
+                        category_idx=category_idx,
+                        abstract=abstract,
+                        filename=file_for_upload.split("/")[-1],
+                        filedir=file_for_upload)
+
+        try:
+            db.session.add(post)
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+        except Exception as e:
+            db.session.rollback()
+            flash(message="Unknown error occured", category="error")
+            return redirect(url_for("admin.posts"))
+
+        
+        flash(message="Post upload successfully.", category="success")
         return redirect(url_for("admin.posts"))
     
     return render_template( f"/admin/{get_config('admin_theme')}/contents/write.html")

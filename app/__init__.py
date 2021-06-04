@@ -100,7 +100,7 @@ def create_app(config="app.config.Config"):
         else:
             # default theme
             set_config("admin_theme", "adminlte3")
-            set_config("front_theme", "slate")
+            set_config("front_theme", "kkami")
             
             # email configuration
             set_email()
