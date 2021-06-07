@@ -90,7 +90,7 @@ def posts_add():
                         category_idx=category_idx,
                         abstract=abstract,
                         filename=file_for_upload.split("/")[-1],
-                        filedir=file_for_upload)
+                        fullpath=file_for_upload)
 
         try:
             db.session.add(post)
@@ -103,7 +103,7 @@ def posts_add():
             return redirect(url_for("admin.posts"))
 
         # Image update to database
-        post    = Posts.query.filter_by(filedir=file_for_upload).first()
+        post    = Posts.query.filter_by(fullpath=file_for_upload).first()
 
         if post == None:
             flash(message="Failed to update images of this post.", category="error")

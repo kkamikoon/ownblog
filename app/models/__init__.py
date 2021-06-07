@@ -77,7 +77,7 @@ class Posts(db.Model):
     title       = db.Column(db.String(256))
     abstract    = db.Column(db.String(512))
     filename    = db.Column(db.String(512), unique=True)
-    filedir     = db.Column(db.String(2048))
+    fullpath    = db.Column(db.String(2048))
     hidden      = db.Column(db.Integer,     default=True)
     date        = db.Column(db.DateTime,    default=datetime.datetime.utcnow)
 
