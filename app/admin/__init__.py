@@ -15,7 +15,7 @@ from flask.helpers          import safe_join
 from app.utils              import get_config
 from app.utils.user         import is_admin, get_current_user
 from app.utils.decorators   import admin_only
-from app.utils.blog         import get_tmp_dir
+from app.utils.blog         import get_tmp_dir, to_route_path
 
 admin = Blueprint("admin", __name__)
 
@@ -52,7 +52,8 @@ def image_uploads():
     
     # path on html : /static/<theme>/<vendor>/<path:path>
     for fkey, fvalue in files.items():
-        path    =  tmp_dir.replace(app.root_path, "").replace("/themes", "")
+        #path    =  tmp_dir.replace(app.root_path, "").replace("/themes", "")
+        path    =  to_route_path(tmp_dir)
         name    = ( hashlib.sha3_256(os.urandom(64)).hexdigest() +
                     "."                                          +
                     fvalue.filename.split(".")[1] ) # file extension
@@ -60,6 +61,6 @@ def image_uploads():
         dirs.append(path + "/" + name)
 
         # save file
-        files[fkey].save(os.path.join(tmp_dir, name))
+        files[fkey].save(safe_join(tmp_dir, name))
 
     return "".join(f"![{d}](http://{request.host}{d})\n" for d in dirs)

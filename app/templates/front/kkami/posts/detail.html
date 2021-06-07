@@ -1,0 +1,10 @@
+{% extends '/front/' + get_config('front_theme') + '/main/layout.html' %}
+{% block main %}
+
+<div class="py-5">
+  <div class="col-lg-10 mx-auto">
+    {{post | markdown}}
+  </div>
+</div>
+
+{% endblock %}

@@ -10,4 +10,7 @@ def get_markdown(theme, vendor, path, filename):
                             filename),
                 "r",
                 encoding='utf-8').read()
-    
+
+
+def get_markdown2(path):
+    return open(path, "r", encoding='utf-8').read()

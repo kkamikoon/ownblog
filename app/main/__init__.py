@@ -40,7 +40,6 @@ def code():
                                             filename="code.md"))
 
 
-
 @main.route("/static/<theme>/<vendor>/<path:path>")
 def themes(theme, vendor, path):
     filename = safe_join(app.root_path, "static", theme, "themes", vendor, path)
@@ -49,7 +48,6 @@ def themes(theme, vendor, path):
         return send_file(filename)
     else:
         abort(404)
-    
 
 
 @main.route("/static/<img>")
@@ -62,6 +60,14 @@ def image(img):
         abort(404)
     
 
+@main.route("/static/<theme>/images/<img>")
+def post_image(theme, img):
+    filename = safe_join(app.root_path, "static", theme, "images", img)
+
+    if os.path.isfile(filename):
+        return send_file(filename)
+    else:
+        abort(404)
 
 
 

@@ -82,7 +82,21 @@ class Posts(db.Model):
     date        = db.Column(db.DateTime,    default=datetime.datetime.utcnow)
 
 
+class PostImages(db.Model):
+    __tablename__   = "post_images"
+    __table_args__  = {'mysql_collate' : "utf8_general_ci"}
+
+    # Core Attributes
+    idx         = db.Column(db.Integer,     primary_key=True)
+    post_idx    = db.Column(db.Integer,     db.ForeignKey(  'posts.idx',
+                                                            ondelete="SET NULL",
+                                                            onupdate="CASCADE"))
+    path        = db.Column(db.String(2048))
+    date        = db.Column(db.DateTime,    default=datetime.datetime.utcnow)
+
+
 class Themes(db.Model):    
+    # To do...
     __tablename__   = "themes"
     __table_args__  = {'mysql_collate' : "utf8_general_ci"}
 
