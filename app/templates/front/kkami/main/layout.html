@@ -26,21 +26,24 @@
         <a class="navbar-brand me-auto d-flex align-items-center" href="/">
           <img src="{{url_for('main.image', img='dokkaebi_yelling.gif')}}" style="width: 50%" class="mx-auto">
         </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav-menu" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
   
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse" id="nav-menu">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
+            <li class="nav-item text-center">
               <a class="nav-link {% if current_endpoint() in ['main.index'] %}active{% endif %}" aria-current="page" href="/">Home</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item text-center">
               <a class="nav-link {% if current_endpoint() in ['main.about'] %}active{% endif %}" href="/about">About</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item text-center">
               <a class="nav-link {% if current_endpoint() in ['main.posts'] %}active{% endif %}" href="/posts">Posts</a>
             </li>
           </ul>
         
-          <div class="text-end">
+          <div class="text-center">
             {% if authed() %}
             <a href="/sign/out" class="btn btn-outline-light me-2">Sign-Out</a>
             {% else%}

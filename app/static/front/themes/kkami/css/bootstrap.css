@@ -10835,3 +10835,8 @@ textarea.form-control-lg {
 }
 
 /*# sourceMappingURL=bootstrap.css.map */
+
+/* Markdown */
+.markdown-style img{
+  max-width: 100%;
+}
