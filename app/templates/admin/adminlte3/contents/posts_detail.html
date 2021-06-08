@@ -1,0 +1,52 @@
+{% extends "/admin/" + get_config('admin_theme') + "/main/layout.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <form method="POST" action="/admin/posts/{{post.idx}}">
+      <div class="card card-warning card-outline">
+        <div class="card-header">
+          <div class="row">
+            <div class="mb-3 col-md-2 markdown-category">
+              <select class="form-control" name="category_idx">
+                {% if get_categories() | length == 0 %}
+                <option value="">No categories...</option>
+                {% else %}
+                {% for category in get_categories() %}
+                <option value="{{category.idx}}" {% if category.idx == post.category_idx %}selected{% endif %}>{{category.name}}</option>
+                {% endfor %}
+                {% endif %}
+              </select>
+            </div>
+            <div class="col-md-12">
+              <input type="text" class="markdown-title form-control" name="title" value="{{post.title}}" placeholder="Title" autocomplete="off">
+            </div>
+            <div class="col-md-12">
+              <input type="text" class="markdown-abstract form-control" name="abstract" value="{{post.abstract}}" placeholder="Abstract (Optional)" autocomplete="off">
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <textarea name="body" id="editor">{{body}}</textarea>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <form method="POST" action="/admin/posts/del">
+      <div class="card card-danger card-outline">
+        <div class="card-header">
+          Delete Post
+        </div>
+        <div class="card-body">
+          <p>Are your sure to delete this post?</p>
+          <input type="text" class="markdown-confirm form-control" name="title" value="" placeholder="{{post.title}}" autocomplete="off">
+        </div>
+        <div class="card-footer text-right">
+          <button type="reset" class="btn btn-outline-secondary">Reset</button>
+          <button type="submit" class="btn btn-outline-warning">Delete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

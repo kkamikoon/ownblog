@@ -32988,6 +32988,13 @@ a.text-muted:hover {
   border: none;
 }
 
+.markdown-confirm {
+  font-size: 1rem;
+  border: none;
+  height: 2rem;
+}
+
+
 .mardkown-category {
   border-radius: 0.25rem;
 }

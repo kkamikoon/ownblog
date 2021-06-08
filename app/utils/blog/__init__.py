@@ -59,7 +59,8 @@ def get_images_path(body):
     
     :return:        path of images - list type (filtered duplicates)
     """
-    img_regex = re.compile(r"/static/front/[a-zA-Z0-9]*/tmp_[a-z0-9]*/[a-z0-9]*[\.a-z0-9]{1,10}")
+    #img_regex = re.compile(r"/static/front/[a-zA-Z0-9]*/tmp_[a-z0-9]*/[a-z0-9]*[\.a-z0-9]{1,10}")
+    img_regex = re.compile(r"/static/front/[a-zA-Z0-9_/]*/[a-z0-9_]*[\.a-z0-9]{1,10}")
 
     return list(set(img_regex.findall(body)))
 
