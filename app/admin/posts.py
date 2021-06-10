@@ -22,6 +22,7 @@ from app.models             import (
     PostImages,
     Categories
 )
+
 from app.utils.blog         import (
     get_img_upload_path,
     get_post_upload_path,
@@ -31,6 +32,10 @@ from app.utils.blog         import (
     get_tmp_dir,
     clear_tmp_dir,
     to_route_path
+)
+
+from app.utils.blog.posts   import (
+    remove_post
 )
 
 admin = Blueprint("admin", __name__)
@@ -223,8 +228,6 @@ def posts_detail(post_idx):
                 flash(message="Unknown error occured", category="error")
                 return redirect(url_for("admin.posts"))
         
-        
-    
 
     # GET Method
     body = open(post.fullpath, "r", encoding="utf-8").read()
@@ -232,5 +235,31 @@ def posts_detail(post_idx):
     return render_template( f"/admin/{get_config('admin_theme')}/contents/posts_detail.html",
                             post=post,
                             body=body)
+
+
+@admin.route("/admin/posts/del/<post_idx>", methods=['GET', 'POST'])
+@admin_only
+def posts_del(post_idx):
+    title   = request.form.get("title",     type=str)
+    post    = Posts.query.filter_by(idx=post_idx).first()
+
+    # No matched post selected
+    if post == None:
+        flash(message="No matched posts", category="error")
+        return redirect(url_for("admin.posts_detail", post_idx=post_idx))
+    
+    # No matched title
+    if post.title != title:
+        flash(message="Title is not matched", category="error")
+        return redirect(url_for("admin.posts_detail", post_idx=post_idx))
+
+    if not remove_post(post):
+        flash(message="Failed to delete post", category="error")
+        return redirect(url_for("admin.posts_detail", post_idx=post_idx))
+    
+
+    flash(message="Post removed successfully.", category="success")
+    return redirect(url_for("admin.posts"))
+    
 
     
