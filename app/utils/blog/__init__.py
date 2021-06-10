@@ -50,7 +50,7 @@ def get_img_upload_path(title, ext):
     
     :return:        safe joined root path of image directory
     """
-    return get_config('upload_dir') + f"/images/{title.replace(' ', '_')}{ext}"
+    return get_config('upload_dir') + f"/images/{title.replace(' ', '_')}_{str(uuid4())}{ext}"
 
 
 def get_images_path(body):
