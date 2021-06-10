@@ -41,7 +41,7 @@ def get_post_upload_path(title):
 
     :return:        safe joined root path of post directory
     """
-    return get_config("upload_dir") + f"/posts/{title.replace(' ', '_')}.md" 
+    return get_config("upload_dir") + f"/posts/{title.replace(' ', '_')}_{str(uuid4())}.md" 
 
 
 def get_img_upload_path(title, ext):
