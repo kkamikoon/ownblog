@@ -31,11 +31,13 @@ from app.utils.blog         import (
     get_filename,
     get_tmp_dir,
     clear_tmp_dir,
+    get_post_body,
     to_route_path
 )
 
 from app.utils.blog.posts   import (
-    remove_post
+    remove_post,
+    remove_specific_post_image
 )
 
 admin = Blueprint("admin", __name__)
@@ -56,7 +58,7 @@ def posts():
 
 @admin.route("/admin/posts/add", methods=['GET', 'POST'])
 @admin_only
-def posts_add(): 
+def posts_add():
     # Request method check
     if request.method == "POST":
         title           = request.form.get("title")
@@ -113,8 +115,9 @@ def posts_add():
             flash(message="Unknown error occured", category="error")
             return redirect(url_for("admin.posts"))
 
+
         # Image update to database
-        post    = Posts.query.filter_by(fullpath=file_for_upload).first()
+        post    = Posts.query.filter_by(idx=post.idx).first()
 
         if post == None:
             flash(message="Failed to update images of this post.", category="error")
@@ -158,20 +161,20 @@ def posts_detail(post_idx):
     post = Posts.query.filter_by(idx=post_idx).first()
 
     if post == None:
-        flash(message="No matched post.", category="error")
+        flash(message=f"No matched post.", category="error")
         return redirect(url_for("admin.posts"))
 
     imgs = PostImages.query.filter_by(post_idx=post.idx).all()
 
+    # Edit function
     if request.method == "POST":
         title               = request.form.get("title")
         category_idx        = request.form.get("category_idx")
         body                = request.form.get("body")
         abstract            = request.form.get("abstract")
 
-        # markdown file saving
+        # markdown file full path modifying
         file_for_upload = get_post_upload_path(title=title)
-
         shutil.move(post.fullpath, file_for_upload)
 
         # update database(Posts)
@@ -185,18 +188,23 @@ def posts_detail(post_idx):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            flash(message="Unknown error occured", category="error")
+            flash(message=f"Unknown error occured", category="error")
             return redirect(url_for("admin.posts"))
 
-
         # update images on body
-        img_pathes          = get_images_path(body)
+        img_pathes          = get_images_path(body)     # route pathes
+        existing_pathes     = []                        
         upload_pathes       = []
 
         # Filtering existing pathes
         for img in imgs:
-            img_pathes.remove(img)
-        
+            try:
+                img_pathes.remove(to_route_path(img.path)) # full path
+            except ValueError:
+                existing_pathes.append(img.path)
+                
+
+        # New images upload process - temp files
         for path in img_pathes:
             # temp pathes to upload path
             upload_path = get_img_upload_path(title=title,
@@ -214,6 +222,11 @@ def posts_detail(post_idx):
             # temporary saving upload pathes for update database(PostImages)
             upload_pathes.append(upload_path)
 
+        # saving markdown file
+        with open(post.fullpath, "w", encoding="utf-8") as edit_file_w:
+            edit_file_w.write(body)
+
+
         # update new images to database
         for path in upload_pathes:
             img = PostImages(post_idx=post.idx,
@@ -225,16 +238,27 @@ def posts_detail(post_idx):
                 db.session.rollback()
             except Exception as e:
                 db.session.rollback()
-                flash(message="Unknown error occured", category="error")
+                flash(message=f"Unknown error occured", category="error")
                 return redirect(url_for("admin.posts"))
         
 
+        # remove not used existing post
+        for path in existing_pathes:
+            if not remove_specific_post_image(path):
+                flash(message=f"Failed to remove img : {path}", category="error")
+                        
+
+        flash(message=f"Edit post successfully", category="success")
+        return redirect(url_for("admin.posts"))
+
+        
     # GET Method
     body = open(post.fullpath, "r", encoding="utf-8").read()
 
     return render_template( f"/admin/{get_config('admin_theme')}/contents/posts_detail.html",
                             post=post,
                             body=body)
+
 
 
 @admin.route("/admin/posts/del/<post_idx>", methods=['GET', 'POST'])

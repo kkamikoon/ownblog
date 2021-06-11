@@ -14,8 +14,8 @@ def remove_post(post):
 
     :comment:       Must do this function first before delete post.
 
-    :return:        True - successfully deleted
-                    False - failed to deleted
+    :return:        True - successfully removed
+                    False - failed to removed
     """
     if post == None:
         return False
@@ -41,8 +41,8 @@ def remove_post_images(post):
 
     :comment:       Must do this function first before delete post.
 
-    :return:        True - successfully deleted
-                    False - failed to deleted
+    :return:        True - successfully removed
+                    False - failed to removed
     """
     if post == None:
         return False
@@ -56,9 +56,27 @@ def remove_post_images(post):
         db.session.query(PostImages.post_idx==post.idx).delete()
         db.session.commit()
     except Exception as e:
-        print(f"[-] remove post images[1] {e}")
         db.session.rollback()
         return False
 
     return True
 
+
+def remove_specific_post_image(path):
+    """
+    :param  path:   path of post image (using matching post)
+
+    :comment:       remove specific image and update database
+
+    :return:        True - successfully removed
+                    False - failed to removed
+    """
+    try:
+        db.session.query(PostImages.path==path).delete()
+        os.remove(path)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return False
+    
+    return True

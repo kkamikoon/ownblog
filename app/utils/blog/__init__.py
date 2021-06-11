@@ -41,7 +41,7 @@ def get_post_upload_path(title):
 
     :return:        safe joined root path of post directory
     """
-    return get_config("upload_dir") + f"/posts/{title.replace(' ', '_')}_{str(uuid4())}.md" 
+    return get_config("upload_dir") + f"/posts/{title.replace(' ', '_')}_{str(uuid4()).replace('-', '_')}.md" 
 
 
 def get_img_upload_path(title, ext):
@@ -50,7 +50,7 @@ def get_img_upload_path(title, ext):
     
     :return:        safe joined root path of image directory
     """
-    return get_config('upload_dir') + f"/images/{title.replace(' ', '_')}_{str(uuid4())}{ext}"
+    return get_config('upload_dir') + f"/images/{title.replace(' ', '_')}_{str(uuid4()).replace('-', '_')}{ext}"
 
 
 def get_images_path(body):
@@ -87,6 +87,16 @@ def get_filename(path):
     return os.path.split(path)[-1]
 
 
+def get_post_body(path):
+    """
+    :param  path:       full path of post markdown file.
+
+    :return:            string data of markdown that read
+    """
+    with open(path, "r", encoding="utf-8") as file_r:
+        return file_r.read()
+
+
 def to_route_path(path):
     """
     :param  path:       path for switch to route path(root_path -> route path)
@@ -95,3 +105,5 @@ def to_route_path(path):
     """
 
     return path.replace(app.root_path, "").replace("/themes", "")
+
+
