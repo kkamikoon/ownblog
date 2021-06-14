@@ -44,6 +44,7 @@
   <link rel="stylesheet" href="{{url_for('main.themes', theme='admin', vendor=get_config('admin_theme'), path='plugins/summernote/summernote-bs4.min.css')}}">
   <!-- bootstrap markdown editor -->
   <link rel="stylesheet" href="{{url_for('main.themes', theme='admin', vendor=get_config('admin_theme'), path='plugins/bootstrap-markdown-editor/css/bootstrap-markdown-editor.css')}}">
+  <!-- <link rel="stylesheet" href="{{url_for('main.themes', theme='admin', vendor=get_config('admin_theme'), path='plugins/ace/1.3.2/css/ace.css')}}"> -->
   <!-- DataTables -->
   <link rel="stylesheet" href="{{url_for('main.themes', theme='admin', vendor=get_config('admin_theme'), path='plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{url_for('main.themes', theme='admin', vendor=get_config('admin_theme'), path='plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
@@ -159,14 +160,14 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a href="/admin/test" class="nav-link {%if current_endpoint() in ['admin.test']%}active{% endif %}">
                 <i class="nav-icon fa fa-wrench"></i>
                 <p>
                   Test
                 </p>
               </a>
-            </li>
+            </li> -->
             {% else %}
             <li class="nav-item">
               <a href="/admin/setup" class="nav-link active">

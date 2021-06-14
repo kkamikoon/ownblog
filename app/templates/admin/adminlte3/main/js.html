@@ -45,18 +45,6 @@
 <!-- Select2 -->
 <script src="{{url_for('main.themes', theme='admin', vendor=get_config('admin_theme'), path='plugins/select2/js/select2.full.js')}}"></script>
 
-<script>
-  function wake_up(host_idx){
-    $.ajax({
-      type:   "GET",
-      url:    "/admin/hosts/up/" + host_idx,
-      cache:  false,
-      success:function(html){
-        toastr.success(html);
-      }
-    });
-  }
-</script>
 
 <script>
 $("#posts_table").DataTable({

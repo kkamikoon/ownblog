@@ -25,7 +25,7 @@ from app.admin              import configs
 from app.admin              import logs
 from app.admin              import posts
 from app.admin              import categories
-from app.admin              import test
+# from app.admin              import test
 
 @admin.route("/admin", methods=['GET'])
 @admin_only

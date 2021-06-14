@@ -138,3 +138,13 @@ body.md-body-fullscreen,html.md-body-fullscreen{
         -moz-transform:rotate(360deg)
     }
 }
+/* 
+.ace-tm {
+    font-family: inherit;
+    background-color: #1D1F21;
+    color: #eee;
+}
+
+.ace-tm .ace_cursor{
+    color: #eee;
+} */
