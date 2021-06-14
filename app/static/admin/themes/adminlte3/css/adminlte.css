@@ -32998,3 +32998,7 @@ a.text-muted:hover {
 .mardkown-category {
   border-radius: 0.25rem;
 }
+
+.markdown-editor img {
+  max-width: 100%;
+}

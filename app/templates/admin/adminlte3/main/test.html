@@ -1,0 +1,36 @@
+{% extends "/admin/" + get_config('admin_theme') + "/main/layout.html" %}
+{% block content %}
+<form method="POST" action="/admin/posts/add">
+  <div class="col-md-12 col-lg-12">
+    <div class="card card-warning card-outline">
+      <div class="card-header">
+        <div class="row">
+          <div class="mb-3 col-md-2 markdown-category">
+            <select class="form-control" name="category_idx">
+              {% if get_categories() | length == 0 %}
+              <option value="">No categories...</option>
+              {% else %}
+              {% for category in get_categories() %}
+              <option value="{{category.idx}}">{{category.name}}</option>
+              {% endfor %}
+              {% endif %}
+            </select>
+          </div>
+          <div class="col-md-12">
+            <input type="text" class="markdown-title form-control" name="title" value="" placeholder="Title" autocomplete="off">
+          </div>
+          <div class="col-md-12">
+            <input type="text" class="markdown-abstract form-control" name="abstract" value="" placeholder="Abstract (Optional)" autocomplete="off">
+          </div>
+        </div>
+        <br>
+        <textarea id="comment-md" name="comment" placeholder="Say something..."></textarea>
+        <!-- <div id="comment-md-preview-container">
+          <div class="well well-sm well-light md-preview margin-top-10" id="comment-md-preview">
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

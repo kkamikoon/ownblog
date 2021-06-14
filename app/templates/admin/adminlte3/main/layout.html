@@ -50,6 +50,7 @@
   <link rel="stylesheet" href="{{url_for('main.themes', theme='admin', vendor=get_config('admin_theme'), path='plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
   <!-- Select2 -->
   <link rel="stylesheet" href="{{url_for('main.themes', theme='admin', vendor=get_config('admin_theme'), path='plugins/select2/css/select2.css')}}">
+
 </head>
 
 <body class="dark-mode" style="height: auto;">
@@ -155,6 +156,14 @@
                 <i class="nav-icon fa fa-wrench"></i>
                 <p>
                   Configs
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/admin/test" class="nav-link {%if current_endpoint() in ['admin.test']%}active{% endif %}">
+                <i class="nav-icon fa fa-wrench"></i>
+                <p>
+                  Test
                 </p>
               </a>
             </li>

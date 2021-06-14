@@ -70,7 +70,7 @@
             !0 === a.imageUpload && (i += '<div data-mdtooltip="tooltip" title="' + a.label.btnUpload + '" class="btn btn-outline-secondary md-btn-file"><span class="fas fa-upload"></span><input class="md-input-upload" type="file" multiple accept=".jpg,.jpeg,.png,.gif"></div>'),
             i += "</div>",
             !0 === a.fullscreen && (i += '<div class="btn-group">',
-            i += '<button type="button" class="md-btn btn btn-outline-secondary" data-btn="fullscreen"><span class="fas fa-expand-arrows-alt"></span> ' + a.label.btnFullscreen + "</button>",
+            // i += '<button type="button" class="md-btn btn btn-outline-secondary" data-btn="fullscreen"><span class="fas fa-expand-arrows-alt"></span> ' + a.label.btnFullscreen + "</button>",
             i += "</div>"),
             !0 === a.preview && (i += '<div class="btn-group">',
             i += '<button type="button" class="md-btn btn btn-outline-secondary btn-edit active" data-btn="edit"><span class="fas fa-edit"></span> ' + a.label.btnEdit + "</button>",
@@ -238,7 +238,7 @@
             btnUpload: "Upload image",
             btnEdit: "Edit",
             btnPreview: "Preview",
-            btnFullscreen: "Fullscreen",
+            // btnFullscreen: "Fullscreen",
             loading: "Loading",
             submit: "Submit"
         }
