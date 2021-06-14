@@ -83,8 +83,11 @@ $("#categories_table").DataTable({
 <script>
   // boostrap markdown
   $('#editor').markdownEditor({
+    // theme: "twilight",
     theme: "tomorrow_night",
-    imageUpload: true,    
+    imageUpload: true,
+    height: "500px",
+    fontSize: "1rem",
     uploadPath: "/admin/image/uploads",
     preview: true,
     onPreview: function(content, callback) {

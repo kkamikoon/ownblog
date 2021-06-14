@@ -27,7 +27,8 @@
 }
 .md-icon:before{
     content:"\e031";
-    font-family:"Glyphicons Halflings";
+    /* font-family:"Glyphicons Halflings"; */
+    font-family: inherit !important;
     font-size:80px;
     line-height:1;
     -animation:spin 1s infinite linear;
@@ -138,13 +139,3 @@ body.md-body-fullscreen,html.md-body-fullscreen{
         -moz-transform:rotate(360deg)
     }
 }
-/* 
-.ace-tm {
-    font-family: inherit;
-    background-color: #1D1F21;
-    color: #eee;
-}
-
-.ace-tm .ace_cursor{
-    color: #eee;
-} */

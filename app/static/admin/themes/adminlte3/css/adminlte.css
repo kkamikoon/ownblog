@@ -550,7 +550,8 @@ kbd kbd {
 pre {
   display: block;
   font-size: 87.5%;
-  color: #212529;
+  /* color: #212529; */
+  color: #eeeeee;
 }
 
 pre code {
@@ -32997,6 +32998,10 @@ a.text-muted:hover {
 
 .mardkown-category {
   border-radius: 0.25rem;
+}
+
+.markdown-editor {
+  font-family: d2coding !important;
 }
 
 .markdown-editor img {
