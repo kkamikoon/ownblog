@@ -6,8 +6,8 @@
       <div class="card card-warning card-outline">
         <div class="card-header">
           <div class="row">
-            <div class="mb-3 col-md-2 markdown-category">
-              <select class="form-control" name="category_idx">
+            <div class="mb-3 col-md-2">
+              <select class="form-control select2 select2-warning" data-dropdown-css-class="select2-warning" name="category_idx">
                 {% if get_categories() | length == 0 %}
                 <option value="">No categories...</option>
                 {% else %}
@@ -19,6 +19,9 @@
             </div>
             <div class="col-md-12">
               <input type="text" class="markdown-title form-control" name="title" value="{{post.title}}" placeholder="Title" autocomplete="off">
+            </div>
+            <div class="col-md-12">
+              <input type="text" class="tagin" name="tags" value="{{tags}}" autocomplete="off" data-separator=" " required>
             </div>
             <div class="col-md-12">
               <input type="text" class="markdown-abstract form-control" name="abstract" value="{{post.abstract}}" placeholder="Abstract (Optional)" autocomplete="off">

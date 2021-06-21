@@ -32983,6 +32983,7 @@ a.text-muted:hover {
   font-size: 1rem;
   border: none;
   height: 2rem;
+  margin-top: 1rem;
 }
 
 .markdown-abstract::focus {

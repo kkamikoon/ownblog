@@ -20,7 +20,8 @@ from app.models             import (
     db,
     Posts,
     PostImages,
-    Categories
+    Categories,
+    Tags
 )
 
 from app.utils.blog         import (
@@ -38,6 +39,10 @@ from app.utils.blog         import (
 from app.utils.blog.posts   import (
     remove_post,
     remove_specific_post_image
+)
+
+from app.utils.blog.tags    import (
+    remove_multiple_tags
 )
 
 admin = Blueprint("admin", __name__)
@@ -65,6 +70,7 @@ def posts_add():
         category_idx    = request.form.get("category_idx")
         body            = request.form.get("body")
         abstract        = request.form.get("abstract")
+        tags            = request.form.get("tags").split(" ")
 
         if category_idx == "":
             flash(message="Be calm... Your post is just saved in temp. Set your categories first.", category="warning")
@@ -91,7 +97,6 @@ def posts_add():
             # temporary saving upload pathes for update database(PostImages)
             upload_pathes.append(upload_path)
 
-                
         
         # markdown file saving
         file_for_upload = get_post_upload_path(title=title)
@@ -112,17 +117,10 @@ def posts_add():
             db.session.rollback()
         except Exception as e:
             db.session.rollback()
-            flash(message="Unknown error occured", category="error")
+            flash(message="Unknown error occured on posts", category="error")
             return redirect(url_for("admin.posts"))
-
 
         # Image update to database
-        post    = Posts.query.filter_by(idx=post.idx).first()
-
-        if post == None:
-            flash(message="Failed to update images of this post.", category="error")
-            return redirect(url_for("admin.posts"))
-
         for path in upload_pathes:
             img = PostImages(post_idx=post.idx,
                              path=path)
@@ -133,10 +131,23 @@ def posts_add():
                 db.session.rollback()
             except Exception as e:
                 db.session.rollback()
-                flash(message="Unknown error occured", category="error")
+                flash(message="Unknown error occured on images", category="error")
                 return redirect(url_for("admin.posts"))
 
-        
+        # Tags update to database
+        for tag in tags:
+            t   = Tags( post_idx=post.idx,
+                        name=tag)
+            try:
+                db.session.add(t)
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+            except Exception as e:
+                db.session.rollback()
+                flash(message="Unknown error occured on tags", category="error")
+                return redirect(url_for("admin.posts"))
+
         # clear temp dir
         clear_tmp_dir()
 
@@ -165,6 +176,7 @@ def posts_detail(post_idx):
         return redirect(url_for("admin.posts"))
 
     imgs = PostImages.query.filter_by(post_idx=post.idx).all()
+    tags = Tags.query.filter_by(post_idx=post.idx).all()
 
     # Edit function
     if request.method == "POST":
@@ -172,6 +184,7 @@ def posts_detail(post_idx):
         category_idx        = request.form.get("category_idx")
         body                = request.form.get("body")
         abstract            = request.form.get("abstract")
+        new_tags            = request.form.get("tags").split(" ")
 
         # markdown file full path modifying
         file_for_upload = get_post_upload_path(title=title)
@@ -195,6 +208,7 @@ def posts_detail(post_idx):
         img_pathes          = get_images_path(body)     # route pathes
         existing_pathes     = []                        
         upload_pathes       = []
+        existing_tags       = []
 
         # Filtering existing pathes
         for img in imgs:
@@ -202,7 +216,13 @@ def posts_detail(post_idx):
                 img_pathes.remove(to_route_path(img.path)) # full path
             except ValueError:
                 existing_pathes.append(img.path)
-                
+        
+        # Filtering existing tags
+        for tag in tags:
+            try:
+                new_tags.remove(tag.name)
+            except ValueError:
+                existing_tags.append(tag.name)
 
         # New images upload process - temp files
         for path in img_pathes:
@@ -238,15 +258,34 @@ def posts_detail(post_idx):
                 db.session.rollback()
             except Exception as e:
                 db.session.rollback()
-                flash(message=f"Unknown error occured", category="error")
+                flash(message=f"Unknown error occured on update new images", category="error")
                 return redirect(url_for("admin.posts"))
         
 
-        # remove not used existing post
+        # remove not used existing images
         for path in existing_pathes:
             if not remove_specific_post_image(path):
                 flash(message=f"Failed to remove img : {path}", category="error")
-                        
+
+
+        # update new tags to database
+        for tag in new_tags:
+            t   = Tags( post_idx=post.idx,
+                        name=tag)
+            try:
+                db.session.add(t)
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+            except Exception as e:
+                db.session.rollback()
+                flash(message=f"Unknown error occured on update new tags", category="error")
+                return redirect(url_for("admin.posts"))
+
+        # # remove not used existing tags
+        print(f"[=] existing_tags : {existing_tags}")
+        remove_multiple_tags(tags=existing_tags)
+
 
         flash(message=f"Edit post successfully", category="success")
         return redirect(url_for("admin.posts"))
@@ -257,6 +296,7 @@ def posts_detail(post_idx):
 
     return render_template( f"/admin/{get_config('admin_theme')}/contents/posts_detail.html",
                             post=post,
+                            tags=" ".join([tag.name for tag in tags]),
                             body=body)
 
 
