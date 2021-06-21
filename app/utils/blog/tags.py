@@ -12,7 +12,7 @@ def get_tags():
 
 def remove_multiple_tags(tags):
     """
-    :param  tags:       name of tag list (type is list)
+    :param  tags:   tag list with tag.name (type is list)
 
     :comment:       remove multiple tags using tag name list
 

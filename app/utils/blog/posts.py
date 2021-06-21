@@ -80,3 +80,25 @@ def remove_specific_post_image(path):
         return False
     
     return True
+
+
+def remove_multiple_post_images(pathes):
+    """
+    :param  pathes: image list with image.path (type is list)
+
+    :comment:       remove multiple images using tag name list
+
+    :return:        True - successfully removed
+                    False - failed to removed
+    """
+    try:
+        db.session.query(PostImages.idx).filter(PostImages.path.in_(pathes)).delete(synchronize_session=False)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return False
+
+    for path in pathes:
+        os.remove(path)
+    
+    return True

@@ -38,7 +38,7 @@ from app.utils.blog         import (
 
 from app.utils.blog.posts   import (
     remove_post,
-    remove_specific_post_image
+    remove_multiple_post_images
 )
 
 from app.utils.blog.tags    import (
@@ -261,12 +261,10 @@ def posts_detail(post_idx):
                 flash(message=f"Unknown error occured on update new images", category="error")
                 return redirect(url_for("admin.posts"))
         
-
         # remove not used existing images
-        for path in existing_pathes:
-            if not remove_specific_post_image(path):
-                flash(message=f"Failed to remove img : {path}", category="error")
-
+        if not remove_multiple_post_images(existing_pathes):
+            flash(message=f"Failed to delete multiple post images", category="error")
+            return redirect(url_for("admin.posts"))
 
         # update new tags to database
         for tag in new_tags:
@@ -283,8 +281,9 @@ def posts_detail(post_idx):
                 return redirect(url_for("admin.posts"))
 
         # # remove not used existing tags
-        print(f"[=] existing_tags : {existing_tags}")
-        remove_multiple_tags(tags=existing_tags)
+        if not remove_multiple_tags(tags=existing_tags):
+            flash(message=f"Failed to delete multiple tags", category="error")
+            return redirect(url_for("admin.posts"))
 
 
         flash(message=f"Edit post successfully", category="success")
