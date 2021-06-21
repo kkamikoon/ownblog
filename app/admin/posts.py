@@ -151,7 +151,7 @@ def posts_add():
         flash(message="Occuring error on clearing tmp directory.", category="error")
         return redirect(url_for("admin.posts"))
 
-    return render_template( f"/admin/{get_config('admin_theme')}/contents/write.html")
+    return render_template( f"/admin/{get_config('admin_theme')}/contents/write.html" )
 
 
 

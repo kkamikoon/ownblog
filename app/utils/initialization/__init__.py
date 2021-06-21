@@ -18,15 +18,20 @@ from app.utils.security.auth import (
     in_whitelist
 )
 
-from app.utils.url     import (
+from app.utils.url import (
     current_url,
     current_endpoint
 )
 
-from app.utils.blog    import (
+from app.utils.blog import (
     get_categories,
     get_category
 )
+
+from app.utils.blog.tags import (
+    get_tags
+)
+
 from app.utils.config  import is_setup
 from app.utils         import get_config
 from app.utils.logging import access_logging
@@ -52,6 +57,7 @@ def init_template_globals(app):
     # Blog utils
     app.jinja_env.globals.update(get_categories=get_categories)
     app.jinja_env.globals.update(get_category=get_category)
+    app.jinja_env.globals.update(get_tags=get_tags)
 
     # URL utils
     app.jinja_env.globals.update(current_url=current_url)

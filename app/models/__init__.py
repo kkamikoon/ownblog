@@ -95,6 +95,32 @@ class PostImages(db.Model):
     date        = db.Column(db.DateTime,    default=datetime.datetime.utcnow)
 
 
+class Tags(db.Model):
+    __tablename__   = "tags"
+    __table_args__  = {'mysql_collate' : "utf8_general_ci"}
+
+    # Core Attributes
+    idx         = db.Column(db.Integer,     primary_key=True)
+    post_idx    = db.Column(db.Integer,     db.ForeignKey(  'posts.idx',
+                                                            ondelete="SET NULL",
+                                                            onupdate="CASCADE"))
+    name        = db.Column(db.String(256))
+    date        = db.Column(db.DateTime,    default=datetime.datetime.utcnow)
+
+
+class TagList(db.Model):
+    __tablename__   = "tag_list"
+    __table_args__  = {'mysql_collate' : "utf8_general_ci"}
+
+    # Core Attributes
+    idx         = db.Column(db.Integer,     primary_key=True)
+    tags_idx    = db.Column(db.Integer,     db.ForeignKey(  'tags.idx',
+                                                            ondelete="SET NULL",
+                                                            onupdate="CASCADE"))
+    name        = db.Column(db.String(256), unique=True)
+    date        = db.Column(db.DateTime,    default=datetime.datetime.utcnow)
+
+
 class Themes(db.Model):    
     # To do...
     __tablename__   = "themes"

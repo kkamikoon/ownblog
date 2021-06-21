@@ -45,6 +45,9 @@
 <!-- Select2 -->
 <script src="{{url_for('main.themes', theme='admin', vendor=get_config('admin_theme'), path='plugins/select2/js/select2.full.js')}}"></script>
 
+<!-- Vanilla JS Tags (Tagin) -->
+<script src="{{url_for('main.themes', theme='admin', vendor=get_config('admin_theme'), path='plugins/vanilla-tagin/js/tagin.js')}}"></script>
+
 
 <script>
 $("#posts_table").DataTable({
@@ -94,4 +97,19 @@ $("#categories_table").DataTable({
       callback( marked(content) );
     }
   });
+</script>
+
+<!-- Select2 -->
+<script>
+  $(document).ready(function(){
+    $('#post_write_categories').select2();
+  })
+</script>
+<!-- ./ -->
+
+<!-- Tagin -->
+<script>
+  for(const el of document.querySelectorAll('.tagin')){
+    tagin(el);
+  }
 </script>

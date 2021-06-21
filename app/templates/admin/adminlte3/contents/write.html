@@ -7,7 +7,7 @@
         <div class="card-header">
           <div class="row">
             <div class="mb-3 col-md-2 markdown-category">
-              <select class="form-control" name="category_idx">
+              <select class="form-control select2 select2-danger" data-dropdown-css-class="select2-danger" id="post_write_categories" name="category_idx">
                 {% if get_categories() | length == 0 %}
                 <option value="">No categories...</option>
                 {% else %}
@@ -18,7 +18,10 @@
               </select>
             </div>
             <div class="col-md-12">
-              <input type="text" class="markdown-title form-control" name="title" value="" placeholder="Title" autocomplete="off">
+              <input type="text" class="markdown-title form-control" name="title" value="" placeholder="Title" autocomplete="off" required>
+            </div>
+            <div class="col-md-12">
+              <input type="text" class="tagin" name="tags" value="" autocomplete="off" data-separator=" " required>
             </div>
             <div class="col-md-12">
               <input type="text" class="markdown-abstract form-control" name="abstract" value="" placeholder="Abstract (Optional)" autocomplete="off">
