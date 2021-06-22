@@ -3,7 +3,6 @@
 
 
 {% if posts | length == 0 %}
-
 <div class="bg-dark text-secondary px-4 py-5 text-center">
   <div class="py-5">
     <h1 class="display-5 fw-bold text-white">None posts</h1>
@@ -24,32 +23,39 @@
         <h3 class="display-6 fw-bold">{{post.title}}</h3>
       </a>
       <p class="fs-6">{{post.abstract}}</p>
+      <p class="fs-6">
+        {% for tag in get_tags(post.idx) %}
+        <button type=button class="btn btn-outline-warning btn-sm" onclick="">{{tag.name}}</button>
+        {% endfor %}
+      </p>
     </div>
   {% endfor %}
   </div>
 
   <div class="pt-5 col-md-3">
-    <div class="bg-dark" style="width: 280px;">
+    <div class="bg-dark" style="width: 280px; border-left: 1px solid rgba(255, 255, 255, 0.5);">
       <ul class="list-unstyled ps-0">
+        {% for category in all_categories %}
         <li class="mb-1">
-          <a href="#" class="fs-5 btn-toggle-dark collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
-            Home
+          <a href="#" class="fs-5 btn-toggle-dark collapsed" data-bs-toggle="collapse" data-bs-target="#{{category.name}}-collapse" aria-expanded="false">
+            {{category.name}}
           </a>
-          <div class="collapse" id="home-collapse">
+          {% if category.subs | length != 0 %}
+          <div class="collapse" id="{{category.name}}-collapse">
             <ul class="btn-toggle-nav-dark list-unstyled fw-normal pb-1 small">
-              <li><a href="#">Overview</a></li>
-              <li><a href="#">Updates</a></li>
-              <li><a href="#">Reports</a></li>
+              {% for sub in category.subs %}
+              <li><a href="#">{{sub.name}}</a></li>
+              {% endfor %}
             </ul>
           </div>
+          {% endif %}
         </li>
+        {% endfor %}
       </ul>
     </div>
   </div>
 
 </div>
-
 {% endif %}
-
 
 {% endblock %}

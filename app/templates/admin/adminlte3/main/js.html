@@ -81,6 +81,21 @@ $("#categories_table").DataTable({
         [25, 50, "All"]
       ],
 });
+
+$("#sub_categories_table").DataTable({
+  "pagingType": "full_numbers",
+  "paging": true,
+  "lengthChange": true,
+  "searching": true,
+  "ordering": true,
+  "info": true,
+  "autoWidth": false,
+  "responsive": true,
+  "lengthMenu": [
+        [25, 50, -1],
+        [25, 50, "All"]
+      ],
+});
 </script>
 
 <script>

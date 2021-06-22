@@ -29,7 +29,8 @@ from app.utils.blog import (
 )
 
 from app.utils.blog.tags import (
-    get_tags
+    get_tags,
+    get_all_tags
 )
 
 from app.utils.config  import is_setup
@@ -58,6 +59,7 @@ def init_template_globals(app):
     app.jinja_env.globals.update(get_categories=get_categories)
     app.jinja_env.globals.update(get_category=get_category)
     app.jinja_env.globals.update(get_tags=get_tags)
+    app.jinja_env.globals.update(get_all_tags=get_all_tags)
 
     # URL utils
     app.jinja_env.globals.update(current_url=current_url)

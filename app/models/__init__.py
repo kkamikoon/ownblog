@@ -14,7 +14,9 @@ class Users(db.Model):
     name        = db.Column(db.String(128))
     password    = db.Column(db.String(256))
     email       = db.Column(db.String(128), unique=True)
-    attach      = db.Column(db.Integer, db.ForeignKey('users_attach.idx', ondelete="SET NULL", onupdate="CASCADE"))
+    attach      = db.Column(db.Integer,     db.ForeignKey(  'users_attach.idx',
+                                                            ondelete="SET NULL",
+                                                            onupdate="CASCADE"))
     
     # Supplementary attributes
     hidden      = db.Column(db.Boolean,     default=False)
@@ -59,6 +61,21 @@ class Categories(db.Model):
 
     # Core Attributes
     idx         = db.Column(db.Integer,     primary_key=True)
+    name        = db.Column(db.String(128), unique=True)
+
+    # Supplementary attributes
+    hidden      = db.Column(db.Boolean,     default=True)
+
+
+class SubCategories(db.Model):
+    __tablename__   = "sub_categories"
+    __table_args__  = {'mysql_collate' : "utf8_general_ci"}
+
+    # Core Attributes
+    idx         = db.Column(db.Integer,     primary_key=True)
+    category_idx= db.Column(db.Integer,     db.ForeignKey(  'categories.idx',
+                                                            ondelete="SET NULL",
+                                                            onupdate="CASCADE"))
     name        = db.Column(db.String(128), unique=True)
 
     # Supplementary attributes

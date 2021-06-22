@@ -1,7 +1,8 @@
 {% extends "/admin/" + get_config('admin_theme') + "/main/layout.html" %}
 {% block content %}
 <div class="row">
-  <div class="col-md-12">
+  <!-- Categories -->
+  <div class="col-md-6">
     <div class="card">
       <div class="card-header">
         <div class="row">
@@ -22,6 +23,7 @@
               <th>Index</th>
               <th>Name</th>
               <th>Hidden</th>
+              <th>Detail</th>
             </tr>
           </thead>
           <tfoot>
@@ -29,6 +31,7 @@
               <th>Index</th>
               <th>Name</th>
               <th>Hidden</th>
+              <th>Detail</th>
             </tr>
           </tfoot>
           <tbody>
@@ -39,6 +42,65 @@
               <td>
                 <button class="btn btn-block btn-outline-{% if category.hidden == False %}success{% else %}secondary{% endif %} btn-sm" onclick="javascript:category_hidden({{category.idx}});" id="category_hidden_{{category.idx}}">{% if category.hidden == True %}True{% else %}False{% endif %}</button>
               </td>
+              <td>
+                <button class="btn btn-block btn-outline-warning btn-sm" onclick="javascript:location.href='/admin/categories/detail/{{category.idx}}'">Detail</button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- ./ -->
+
+  <!-- Sub Categories -->
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="card-title">Sub-Categories</h3>
+          </div>
+          <div class="col-md-6">
+            <button type="button" class="btn btn-sm btn-outline-warning float-right" data-toggle="modal" data-target="#sub_category_add">
+              <b>+ Sub-Category</b>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <table id="sub_categories_table" class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Index</th>
+              <th>Parent</th>
+              <th>Name</th>
+              <th>Hidden</th>
+              <th>Detail</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Index</th>
+              <th>Parent</th>
+              <th>Name</th>
+              <th>Hidden</th>
+              <th>Detail</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for sub in subcategories %}
+            <tr>
+              <td>{{sub.idx}}</td>
+              <td>{{get_category(sub.category_idx).name}}</td>
+              <td>{{sub.name}}</td>
+              <td>
+                <button class="btn btn-block btn-outline-{% if sub.hidden == False %}success{% else %}secondary{% endif %} btn-sm" onclick="javascript:sub_category_hidden({{sub.idx}});" id="sub_category_hidden_{{sub.idx}}">{% if sub.hidden == True %}True{% else %}False{% endif %}</button>
+              </td>
+              <td>
+                <button class="btn btn-block btn-outline-warning btn-sm" onclick="javascript:location.href='/admin/categories/sub/detail/{{sub.idx}}'">Detail</button>
+              </td>
             </tr>
             {% endfor %}
           </tbody>
@@ -48,7 +110,7 @@
   </div>
 </div>
 
-<!-- User Add Modal -->
+<!-- Category Add Modal -->
 <div class="modal fade" id="category_add" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -60,6 +122,54 @@
       </div>
       <form method="POST" action="/admin/categories/add">
         <div class="modal-body">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" name="name"  placeholder="Category Name" autocomplete="off" required>
+          </div>
+
+          <div class="form-group">
+            <div class="custom-control custom-checkbox d-inline ml-2">
+              <input class="custom-control-input custom-control-input-warning" type="checkbox" value="" name="hidden">
+              <label class="custom-control-label">Hidden</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-warning">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /.modal -->
+
+<!-- Sub-Category Add Modal -->
+<div class="modal fade" id="sub_category_add" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Category Add</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="/admin/categories/add">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Parent Category</label>
+            <select class="form-control select2 select2-warning" data-dropdown-css-class="select2-warning" name="category_idx">
+              {% if get_categories() | length == 0 %}
+              <option value="">No categories...</option>
+              {% else %}
+              {% for category in get_categories() %}
+              <option value="" selected>Select Parent Category</option>
+              <option value="{{category.idx}}">{{category.name}}</option>
+              {% endfor %}
+              {% endif %}
+            </select>
+          </div>
+
           <div class="form-group">
             <label>Name</label>
             <input type="text" class="form-control" name="name"  placeholder="Category Name" autocomplete="off" required>

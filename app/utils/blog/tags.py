@@ -6,7 +6,11 @@ from app.utils              import get_config
 from app.models             import db, Tags, TagList
 
 
-def get_tags():
+def get_tags(post_idx):
+    return Tags.query.filter_by(post_idx=post_idx).all()
+
+
+def get_all_tags():
     return TagList.query.all()
 
 
