@@ -534,6 +534,28 @@ progress {
   }
 }
 
+.display-7 {
+  font-size: calc(1.325rem + 0.9vw);
+  font-weight: 300;
+  line-height: 1.2;
+}
+@media (min-width: 1200px) {
+  .display-7 {
+    font-size: 2rem;
+  }
+}
+
+.display-8 {
+  font-size: calc(1.275rem + 0.3vw);
+  font-weight: 300;
+  line-height: 1.2;
+}
+@media (min-width: 1200px) {
+  .display-8 {
+    font-size: 1.5rem;
+  }
+}
+
 .list-unstyled {
   padding-left: 0;
   list-style: none;
@@ -10837,6 +10859,23 @@ textarea.form-control-lg {
 /*# sourceMappingURL=bootstrap.css.map */
 
 /* Markdown */
+.markdown-style{
+  background-color: rgba(255,255,255,0.05);
+  padding: 2rem 1rem 10rem 1rem;
+  border-radius: 1rem;
+}
+
 .markdown-style img{
   max-width: 100%;
+}
+
+/* Posts and Categories */
+.posts {
+  padding: 0 0 0.5rem 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.categories {
+  padding: 0 0 0.5rem 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
 }

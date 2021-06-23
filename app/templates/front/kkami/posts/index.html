@@ -16,45 +16,22 @@
 
 {% else %}
 <div class="row">
-  <div class="p-5 mb-4 bg-dark col-md-9">
+  <div class="p-5 mb-4 bg-dark col-md-12">
+    <!-- <p class="fs-2 posts">Posts</p> -->
   {% for post in posts %}
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-3">
       <a href="/posts/{{post.idx}}">
-        <h3 class="display-6 fw-bold">{{post.title}}</h3>
+        <h3 class="display-8 fw-bold">{{post.title}}</h3>
       </a>
-      <p class="fs-6">{{post.abstract}}</p>
-      <p class="fs-6">
+      <!-- <p class="fs-6 ms-2">- {{post.abstract}}</p> -->
+      <p>
         {% for tag in get_tags(post.idx) %}
-        <button type=button class="btn btn-outline-warning btn-sm" onclick="">{{tag.name}}</button>
+        <button type=button class="btn btn-outline-secondary btn-sm" onclick="">#{{tag.name}}</button>
         {% endfor %}
       </p>
     </div>
   {% endfor %}
   </div>
-
-  <div class="pt-5 col-md-3">
-    <div class="bg-dark" style="width: 280px; border-left: 1px solid rgba(255, 255, 255, 0.5);">
-      <ul class="list-unstyled ps-0">
-        {% for category in all_categories %}
-        <li class="mb-1">
-          <a href="#" class="fs-5 btn-toggle-dark collapsed" data-bs-toggle="collapse" data-bs-target="#{{category.name}}-collapse" aria-expanded="false">
-            {{category.name}}
-          </a>
-          {% if category.subs | length != 0 %}
-          <div class="collapse" id="{{category.name}}-collapse">
-            <ul class="btn-toggle-nav-dark list-unstyled fw-normal pb-1 small">
-              {% for sub in category.subs %}
-              <li><a href="#">{{sub.name}}</a></li>
-              {% endfor %}
-            </ul>
-          </div>
-          {% endif %}
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-
 </div>
 {% endif %}
 

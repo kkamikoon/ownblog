@@ -25,6 +25,7 @@ main = Blueprint("main", __name__)
 from app.main   import sign
 from app.main   import about
 from app.main   import posts
+from app.main   import categories
 
 @main.route("/", methods=['GET'])
 def index():
