@@ -32,7 +32,8 @@
 }
 
 .btn-toggle-dark {
-  color: #eeeeee;
+  /* color: #eeeeee; */
+  color: #ffe477;
   display: inline-flex;
   align-items: center;
   padding: .25rem .5rem;
