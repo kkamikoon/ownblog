@@ -43,7 +43,7 @@
                 <button class="btn btn-block btn-outline-{% if category.hidden == False %}success{% else %}secondary{% endif %} btn-sm" onclick="javascript:category_hidden({{category.idx}});" id="category_hidden_{{category.idx}}">{% if category.hidden == True %}True{% else %}False{% endif %}</button>
               </td>
               <td>
-                <button class="btn btn-block btn-outline-warning btn-sm" onclick="javascript:location.href='/admin/categories/detail/{{category.idx}}'">Detail</button>
+                <button class="btn btn-block btn-outline-warning btn-sm" onclick="javascript:location.href='/admin/categories/{{category.idx}}'">Detail</button>
               </td>
             </tr>
             {% endfor %}
@@ -99,7 +99,7 @@
                 <button class="btn btn-block btn-outline-{% if sub.hidden == False %}success{% else %}secondary{% endif %} btn-sm" onclick="javascript:sub_category_hidden({{sub.idx}});" id="sub_category_hidden_{{sub.idx}}">{% if sub.hidden == True %}True{% else %}False{% endif %}</button>
               </td>
               <td>
-                <button class="btn btn-block btn-outline-warning btn-sm" onclick="javascript:location.href='/admin/categories/sub/detail/{{sub.idx}}'">Detail</button>
+                <button class="btn btn-block btn-outline-warning btn-sm" onclick="javascript:location.href='/admin/categories/sub/{{sub.idx}}'">Detail</button>
               </td>
             </tr>
             {% endfor %}
@@ -159,11 +159,11 @@
           <div class="form-group">
             <label>Parent Category</label>
             <select class="form-control select2 select2-warning" data-dropdown-css-class="select2-warning" name="category_idx">
+              <option value="" selected>Select Parent Category</option>
               {% if get_categories() | length == 0 %}
               <option value="">No categories...</option>
               {% else %}
               {% for category in get_categories() %}
-              <option value="" selected>Select Parent Category</option>
               <option value="{{category.idx}}">{{category.name}}</option>
               {% endfor %}
               {% endif %}
