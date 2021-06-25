@@ -114,6 +114,37 @@ $("#sub_categories_table").DataTable({
   });
 </script>
 
+{% if current_endpoint() in ['admin.posts'] %}
+<!-- Posts Hidden -->
+<script>
+  function post_hidden(post_idx){
+    $.ajax({
+      type:   "GET",
+      url:    "/admin/posts/hidden/" + post_idx,
+      cache:  false,
+      success:function(html){
+        if (html == "No"){
+          toastr.success("Failed to update hidden");
+        }
+        else{
+          ele = document.getElementById("post_hidden_"+post_idx);
+
+          if (html == "True"){
+            ele.innerText = "Hidden";
+            ele.classList.replace("btn-outline-success", "btn-outline-secondary");
+          }
+          else{
+            ele.innerText = "Open";
+            ele.classList.replace("btn-outline-secondary", "btn-outline-success");
+          }
+        }        
+      }
+    });
+  }
+</script>
+<!-- ./ -->
+{% endif %}
+
 <!-- Select2 -->
 <script>
   $('.select2').select2();

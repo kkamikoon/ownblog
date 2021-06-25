@@ -5,7 +5,15 @@
     <script src="{{url_for('main.themes', theme='front', vendor=get_config('front_theme'), path='plugins/highlight.js/js/highlight.pack.js')}}"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
+    {% if current_endpoint() in ['main.tags', 'main.posts'] %}
     <!-- Tag button - searching -->
     <script>
-
+      function select_tags(tag_name){
+        {%-if 'tags' in path-%}
+        location.href='{{path}}' + tag_name;
+        {%-else-%}
+        location.href='/tags/{{path}}' + tag_name;
+        {%-endif-%}
+      }
     </script>
+    {% endif %}

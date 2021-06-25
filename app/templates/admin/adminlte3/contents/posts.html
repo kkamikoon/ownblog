@@ -24,7 +24,7 @@
               <th>Index</th>
               <th>Category</th>
               <th>Title</th>
-              <th>Public</th>
+              <th>Hidden</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -33,7 +33,7 @@
               <th>Index</th>
               <th>Category</th>
               <th>Title</th>
-              <th>Public</th>
+              <th>Hidden</th>
               <th>Action</th>
             </tr>
           </tfoot>
@@ -44,7 +44,7 @@
               <td>{{get_category(post.category_idx).name}}</td>
               <td>{{post.title}}</td>
               <td>
-                <button class="btn btn-block btn-outline-{% if post.hidden == True %}secondary{% else %}success{% endif %} btn-sm" onclick="javascript:post_hidden({{post.idx}});" id="post_hidden{{post.idx}}">{% if post.hidden == True %}Open{% else %}Hidden{% endif %}</button>
+                <button class="btn btn-block btn-outline-{% if post.hidden == True %}secondary{% else %}success{% endif %} btn-sm" onclick="javascript:post_hidden({{post.idx}});" id="post_hidden_{{post.idx}}">{% if post.hidden == True %}Hidden{% else %}Open{% endif %}</button>
               </td>
               <td>
                 <a href="/admin/posts/{{post.idx}}" class="btn btn-block btn-outline-warning btn-sm" role="button" aria-disabled="true">Detail</a>

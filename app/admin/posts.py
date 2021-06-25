@@ -55,7 +55,8 @@ def posts():
     posts   = db.session.query( Posts.idx,
                                 Posts.category_idx,
                                 Posts.title,
-                                Posts.filename ).all()
+                                Posts.filename,
+                                Posts.hidden ).all()
 
     return render_template( f"/admin/{get_config('admin_theme')}/contents/posts.html",
                             posts=posts)
@@ -324,5 +325,27 @@ def posts_del(post_idx):
     flash(message="Post removed successfully.", category="success")
     return redirect(url_for("admin.posts"))
     
+
+    
+@admin.route("/admin/posts/hidden/<post_idx>", methods=['GET'])
+@admin_only
+def posts_hidden(post_idx):
+    post    = Posts.query.filter_by(idx=post_idx).first()
+
+    # No matched post selected
+    if post == None:
+        flash(message="No matched posts", category="error")
+        return "No"
+    
+    post.hidden = not post.hidden
+
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        flash(message=f"Failed to edit post hidden value [idx:{post.idx}]", category="error")
+        return "No"
+
+    return str(bool(post.hidden))
 
     
