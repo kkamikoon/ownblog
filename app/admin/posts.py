@@ -138,7 +138,7 @@ def posts_add():
         # Tags update to database
         for tag in tags:
             t   = Tags( post_idx=post.idx,
-                        name=tag)
+                        name=tag.lower())
             try:
                 db.session.add(t)
                 db.session.commit()

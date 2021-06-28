@@ -25,6 +25,7 @@ def tags(selected_tags):
         flash(message="You've been wrong action for selecting tags", category="warning")
         return redirect(url_for(".posts"))
 
+    path    = request.path.replace(" ", "%20") + "%20"
     posts   = db.session.query( Posts.idx,
                                 Posts.title,
                                 Posts.date).filter( Tags.post_idx.in_([ tag.post_idx for tag in tags ]),
@@ -32,5 +33,5 @@ def tags(selected_tags):
                                                     Posts.hidden==False).group_by(Tags.post_idx).all()
 
     return render_template( f"/front/{get_config('front_theme')}/tags/index.html",
-                            path=request.path,
+                            path=path,
                             posts=posts )
