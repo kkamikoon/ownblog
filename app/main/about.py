@@ -16,10 +16,8 @@ def about():
     about = Posts.query.filter_by(idx=get_config("about_post")).first()
 
     if about == None:
-        path = safe_join(app.root_path, "static", "front", "posts", "about.md")
-
         return render_template( f"/front/{get_config('front_theme')}/main/about.html",
-                                about=open(path, "r", encoding="utf-8").read())
+                                about=None)
 
     return render_template(f"/front/{get_config('front_theme')}/main/about.html",
                             about=get_markdown(about.fullpath))

@@ -49,8 +49,10 @@
                   Front Theme
                 </label>
                 <select class="form-control" name="front_theme">
-		              <option value="kkami">kkami</option>
-                  <option value="slate">slate</option>
+		              <!-- Theme directory list(default : front) -->
+                  {% for theme in get_themes() %}
+                  <option value="{{theme}}" {% if get_config('front_theme') == theme %}selected{% endif %}>{{theme}}</option>
+                  {% endfor %}
                 </select>
               </div>
             </div>
@@ -60,7 +62,10 @@
                   Admin Theme
                 </label>
                 <select class="form-control" name="admin_theme">
-                  <option value="{{get_config('admin_theme')}}"selected >{{get_config('admin_theme')}}</option>
+                  <!-- Theme directory list -->
+                  {% for theme in get_themes('admin') %}
+                  <option value="{{theme}}" {% if get_config('admin_theme') == theme %}>{{theme}}{% endif %}</option>
+                  {% endfor %}
                 </select>
               </div>
             </div>

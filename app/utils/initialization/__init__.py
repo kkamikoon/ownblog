@@ -33,7 +33,14 @@ from app.utils.blog.tags import (
     get_all_tags
 )
 
-from app.utils.config  import is_setup
+from app.utils.config import (
+    is_setup,
+)
+
+from app.utils.config.themes import (
+    get_themes
+)
+
 from app.utils         import get_config
 from app.utils.logging import access_logging
 
@@ -45,6 +52,9 @@ def init_template_globals(app):
 
     # Config utils
     app.jinja_env.globals.update(is_setup=is_setup)
+
+    # Config - Themes utils
+    app.jinja_env.globals.update(get_themes=get_themes)
 
     # User utils
     app.jinja_env.globals.update(get_attach=get_attach)

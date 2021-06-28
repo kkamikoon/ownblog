@@ -1,25 +1,15 @@
 {% extends "/admin/" + get_config('admin_theme') + "/main/layout.html" %}
 {% block content %}
 
-<form action="/admin/configs" method="POST">
-  <div class="card card-warning card-outline card-tabs">
-    <div class="card-header p-0 pt-1 border-bottom-0">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link active" data-toggle="pill" href="#web-tab" aria-selected="true">WEB</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="pill" href="#user-tab" aria-selected="false">User</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="pill" href="#domain-tab" aria-selected="false">Domain</a>
-        </li>
-      </ul>
-    </div>
-    <div class="card-body">
-      <div class="tab-content">
-        <!-- Web Tab Config -->
-        <div class="tab-pane fade show active" id="web-tab">
+<div class="row">
+  <!-- Web configs -->
+  <div class="col-md-4">
+    <form action="/admin/configs/web" method="POST">
+      <div class="card card-warning card-outline">
+        <div class="card-header">
+          <h2 class="card-title">WEB - Configs</h2>
+        </div>
+        <div class="card-body">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
@@ -37,28 +27,33 @@
                 <input type="text" class="form-control" name="intro" value="KKAMIKOON" placeholder="Enter Main Title">
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="form-group">
                 <label>
                   Front Theme
                 </label>
                 <select class="form-control" name="front_theme">
-                  <option value="kkami">kkami</option>
-                  <option value="slate">slate</option>
+                  <!-- Theme directory list(default : front) -->
+                  {% for theme in get_themes() %}
+                  <option value="{{theme}}" {% if get_config('front_theme') == theme %}selected{% endif %}>{{theme}}</option>
+                  {% endfor %}
                 </select>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="form-group">
                 <label>
                   Admin Theme
                 </label>
                 <select class="form-control" name="admin_theme">
-                  <option value="{{get_config('admin_theme')}}"selected >{{get_config('admin_theme')}}</option>
+                  <!-- Theme directory list -->
+                  {% for theme in get_themes('admin') %}
+                  <option value="{{theme}}" {% if get_config('admin_theme') == theme %}>{{theme}}{% endif %}</option>
+                  {% endfor %}
                 </select>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
               <div class="form-group">
                 <label>
                   reCaptcha Site Key
@@ -66,7 +61,7 @@
                 <input type="text" class="form-control" name="recaptcha_site_key" value="" placeholder="Get your site key : https://www.google.com/recaptcha/about/">
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
               <div class="form-group">
                 <label>
                   reCaptcha Secret Key
@@ -74,7 +69,7 @@
                 <input type="text" class="form-control" name="recaptcha_secret_key" value="" placeholder="Get your secret key : https://www.google.com/recaptcha/about/">
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
               <div class="form-group">
                 <label>
                   reCaptcha On/Off
@@ -87,13 +82,30 @@
             </div>
           </div>
         </div>
-        <!-- ./ -->
+        <div class="card-footer">
+          <button type="reset" class="btn btn-default">
+            <b>Reset</b>
+          </button>
+          <button type="submit" class="btn btn-warning float-right">
+            <b>Submit</b>
+          </button>
+        </div>
+      </div>  
+    </form>
+  </div>
+  <!-- ./ -->
 
-        <!-- Users Config -->
-        <div class="tab-pane fade show" id="user-tab">
+  <!-- Users configs -->
+  <div class="col-md-4">
+    <form action="/admin/configs/users" method="POST">
+      <div class="card card-success card-outline">
+        <div class="card-header">
+          <h2 class="card-title">Users - Configs</h2>
+        </div>
+        <div class="card-body">
           <div class="row">
             <!-- Default User Authentication -->
-            <div class="col-md-4">
+            <div class="col-md-12">
               <div class="form-group">
                 <label>
                   User Default Verified
@@ -104,7 +116,7 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
               <div class="form-group">
                 <label>
                   User Default Banned
@@ -115,7 +127,7 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
               <div class="form-group">
                 <label>
                   User Default Hidden
@@ -127,9 +139,9 @@
               </div>
             </div>
             <!-- ./ -->
-
+    
             <!-- Default User Attach Type -->
-            <div class="col-md-4">
+            <div class="col-md-6">
               <div class="form-group">
                 <label>
                   User Attach Type
@@ -137,15 +149,7 @@
                 <input type="text" class="form-control" name="user_attach_type" value="User" placeholder="Enter your attach type.">
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label>
-                  User Attach Description
-                </label>
-                <input type="text" class="form-control" name="user_attach_description" value="This is just attachment type of default user. This string is just tag but nothing." placeholder="Enter your attach description.">
-              </div>
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
               <div class="form-group">
                 <label>
                   Attachment Hidden
@@ -156,13 +160,37 @@
                 </select>
               </div>
             </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>
+                  User Attach Description
+                </label>
+                <textarea class="form-control" name="user_attach_description" placeholder="This is just attachment type of default user. This string is just tag but nothing." rows="4">{{user_attach_description}}</textarea>
+              </div>
+            </div>
             <!-- ./ -->
           </div>
         </div>
-        <!-- ./ -->
+        <div class="card-footer">
+          <button type="reset" class="btn btn-default">
+            <b>Reset</b>
+          </button>
+          <button type="submit" class="btn btn-warning float-right">
+            <b>Submit</b>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 
-        <!-- Domain Config -->
-        <div class="tab-pane fade" id="domain-tab">
+  <!-- Domain, About post configs -->
+  <div class="col-md-4">
+    <form action="/admin/configs/domain" method="POST">
+      <div class="card card-info card-outline">
+        <div class="card-header">
+          <h2 class="card-title">Domain - Configs</h2>
+        </div>
+        <div class="card-body">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
@@ -194,20 +222,52 @@
             </p>
           </div>
         </div>
-        <!-- ./ -->
-        
-      </div>
-    </div>
-    <!-- /.card -->
-    <div class="card-footer">
-      <button type="reset" class="btn btn-default">
-        <b>Reset</b>
-      </button>
-      <button type="submit" class="btn btn-warning float-right">
-        <b>Submit</b>
-      </button>
-    </div>
+        <div class="card-footer">
+          <button type="reset" class="btn btn-default">
+            <b>Reset</b>
+          </button>
+          <button type="submit" class="btn btn-warning float-right">
+            <b>Submit</b>
+          </button>
+        </div>
+      </div>  
+    </form>
+    <!-- ./ -->
+  
+    <!-- About config -->
+    <form action="/admin/configs/about" method="POST">
+      <div class="card card-danger card-outline">
+        <div class="card-header">
+          <h2 class="card-title">About - Configs</h2>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>
+                  Set post on about page
+                </label>
+                <select class="form-control" name="about_post_idx">
+                  {% for post in posts %}
+                  <option value="{{post.idx}}" {% if get_config('about_post_idx') == post.idx %} selected {% endif %}>{{post.title}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="reset" class="btn btn-default">
+            <b>Reset</b>
+          </button>
+          <button type="submit" class="btn btn-warning float-right">
+            <b>Submit</b>
+          </button>
+        </div>
+      </div>  
+    </form>
   </div>
-</form>
+</div>
+
 
 {% endblock %}
