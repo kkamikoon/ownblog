@@ -120,6 +120,8 @@ def setup():
             user_attach             = Attach(type=user_attach_type,
                                              description=user_attach_description,
                                              hidden=user_attach_hidden)
+
+            set_config("user_default_attach",   user_attach.idx)
             
             # Commit users account
             try:

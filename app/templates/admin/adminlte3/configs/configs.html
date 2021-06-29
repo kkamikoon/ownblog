@@ -2,8 +2,9 @@
 {% block content %}
 
 <div class="row">
-  <!-- Web configs -->
+  <!-- Web, About configs -->
   <div class="col-md-4">
+    <!-- Web config -->
     <form action="/admin/configs/web" method="POST">
       <div class="card card-warning card-outline">
         <div class="card-header">
@@ -80,6 +81,18 @@
                 </select>
               </div>
             </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>
+                  About Post
+                </label>
+                <select class="form-control" name="about_post_idx">
+                  {% for post in posts %}
+                  <option value="{{post.idx}}" {% if get_config('about_post_idx') == post.idx %} selected {% endif %}>{{post.title}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
           </div>
         </div>
         <div class="card-footer">
@@ -95,7 +108,7 @@
   </div>
   <!-- ./ -->
 
-  <!-- Users configs -->
+  <!-- Users, Domain configs -->
   <div class="col-md-4">
     <form action="/admin/configs/users" method="POST">
       <div class="card card-success card-outline">
@@ -105,67 +118,51 @@
         <div class="card-body">
           <div class="row">
             <!-- Default User Authentication -->
-            <div class="col-md-12">
+            <div class="col-md-4">
               <div class="form-group">
                 <label>
-                  User Default Verified
+                  Default Verified
                 </label>
-                <select class="form-control" name="user_default_verified">
-                  <option value="0" {% if get_config('user_default_verified') == 0 %} selected {% endif %}>False</option>
-                  <option value="1" {% if get_config('user_default_verified') == 1 %} selected {% endif %}>True</option>
-                </select>
+                <button class="btn btn-block btn-outline-{% if get_config('user_default_verified') == True %}success{% else %}secondary{% endif %}" onclick="javascript:user_default('verified');" id="user_default_verified">{% if get_config('user_default_verified') == True %}Verify{% else %}Deny{% endif %}</button>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-4">
               <div class="form-group">
                 <label>
-                  User Default Banned
+                  Default Banned
                 </label>
-                <select class="form-control" name="user_default_banned">
-                  <option value="0" {% if get_config('user_default_banned') == 0 %} selected {% endif %}>False</option>
-                  <option value="1" {% if get_config('user_default_banned') == 1 %} selected {% endif %}>True</option>
-                </select>
+                <button class="btn btn-block btn-outline-{% if get_config('user_default_banned') == True %}success{% else %}secondary{% endif %}" onclick="javascript:user_default('banned');" id="user_default_banned">{% if get_config('user_default_banned') == True %}Verify{% else %}Deny{% endif %}</button>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-4">
               <div class="form-group">
                 <label>
-                  User Default Hidden
+                  Default Hidden
                 </label>
-                <select class="form-control" name="user_default_hidden">
-                  <option value="0" {% if get_config('user_default_hidden') == 0 %} selected {% endif %}>False</option>
-                  <option value="1" {% if get_config('user_default_hidden') == 1 %} selected {% endif %}>True</option>
-                </select>
+                <button class="btn btn-block btn-outline-{% if get_config('user_default_hidden') == True %}success{% else %}secondary{% endif %}" onclick="javascript:user_default('hidden');" id="user_default_hidden">{% if get_config('user_default_hidden') == True %}Verify{% else %}Deny{% endif %}</button>
               </div>
             </div>
             <!-- ./ -->
     
             <!-- Default User Attach Type -->
-            <div class="col-md-6">
+            <div class="col-md-8">
               <div class="form-group">
                 <label>
                   User Attach Type
                 </label>
-                <input type="text" class="form-control" name="user_attach_type" value="User" placeholder="Enter your attach type.">
+                <select class="form-control" name="user_default_attach">
+                  {% for attach in attaches %}
+                  <option value="{{attach.idx}}" {% if get_config('user_default_attach') == 0 %} selected {% endif %}>{{attach.type}}</option>
+                  {% endfor %}
+                </select>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-group">
                 <label>
                   Attachment Hidden
                 </label>
-                <select class="form-control" name="user_attach_hidden">
-                  <option value="0" {% if get_config('user_attach_hidden') == 0 %} selected {% endif %}>False</option>
-                  <option value="1" {% if get_config('user_attach_hidden') == 1 %} selected {% endif %}>True</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <label>
-                  User Attach Description
-                </label>
-                <textarea class="form-control" name="user_attach_description" placeholder="This is just attachment type of default user. This string is just tag but nothing." rows="4">{{user_attach_description}}</textarea>
+                <button class="btn btn-block btn-outline-{% if get_config('user_attach_hidden') == False %}success{% else %}secondary{% endif %}" onclick="javascript:user_default('attach');" id="user_attach_hidden">{% if get_config('user_attach_hidden') == False %}Show{% else %}Hidden{% endif %}</button>
               </div>
             </div>
             <!-- ./ -->
@@ -181,10 +178,9 @@
         </div>
       </div>
     </form>
-  </div>
+    <!-- ./ -->
 
-  <!-- Domain, About post configs -->
-  <div class="col-md-4">
+    <!-- Domain config -->
     <form action="/admin/configs/domain" method="POST">
       <div class="card card-info card-outline">
         <div class="card-header">
@@ -192,7 +188,7 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-9">
               <div class="form-group">
                 <label>
                   Domain
@@ -200,15 +196,12 @@
                 <input type="text" class="form-control" name="domain" value="example.com" placeholder="Enter your domain it you have.">
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
               <div class="form-group">
                 <label>
                   Domain Check
                 </label>
-                <select class="form-control" name="domain_check">
-                  <option value="0" {% if get_config('domain_check') == 0 %} selected {% endif %}>False</option>
-                  <option value="1" {% if get_config('domain_check') == 1 %} selected {% endif %}>True</option>
-                </select>
+                <button class="btn btn-block btn-outline-{% if get_config('domain_check') == True %}success{% else %}secondary{% endif %}" onclick="javascript:domain_checking();" id="domain_check">{% if get_config('domain_check') == True %}Checked{% else %}Unchecked{% endif %}</button>
               </div>
             </div>
           </div>
@@ -233,25 +226,105 @@
       </div>  
     </form>
     <!-- ./ -->
-  
-    <!-- About config -->
-    <form action="/admin/configs/about" method="POST">
-      <div class="card card-danger card-outline">
+  </div>
+
+  <!-- SNS configs -->
+  <div class="col-md-4">
+    <!-- SNS config -->
+    <form action="/admin/configs/domain" method="POST">
+      <div class="card card-secondary card-outline">
         <div class="card-header">
-          <h2 class="card-title">About - Configs</h2>
+          <h2 class="card-title">SNS - Configs</h2>
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-md-12">
+            <!-- Facebook -->
+            <div class="col-md-9">
               <div class="form-group">
                 <label>
-                  Set post on about page
+                  <i class="fab fa-facebook"></i> Facebook
                 </label>
-                <select class="form-control" name="about_post_idx">
-                  {% for post in posts %}
-                  <option value="{{post.idx}}" {% if get_config('about_post_idx') == post.idx %} selected {% endif %}>{{post.title}}</option>
-                  {% endfor %}
-                </select>
+                <input type="text" class="form-control" name="facebook" value="{% if get_config('facebook_open') != None %}{{get_config('facebook_open')}}{% endif %}" placeholder="https://fb.com/goldstar.hack">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>
+                  Open / Hide
+                </label>
+                <button class="btn btn-block btn-outline-{% if get_config('facebook_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('facebook');" id="facebook_open">{% if get_config('facebook_open') == True %}Open{% else %}Hide{% endif %}</button>
+              </div>
+            </div>
+            <!-- ./ -->
+            <!-- Twitter -->
+            <div class="col-md-9">
+              <div class="form-group">
+                <label>
+                  <i class="fab fa-twitter"></i> Twitter
+                </label>
+                <input type="text" class="form-control" name="twitter" value="{% if get_config('twitter_open') != None %}{{get_config('twitter_open')}}{% endif %}" placeholder="Your twitter">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>
+                  Open / Hide
+                </label>
+                <button class="btn btn-block btn-outline-{% if get_config('twitter_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('twitter');" id="twitter_open">{% if get_config('twitter_open') == True %}Open{% else %}Hide{% endif %}</button>
+              </div>
+            </div>
+            <!-- ./ -->
+            <!-- Instagram -->
+            <div class="col-md-9">
+              <div class="form-group">
+                <label>
+                  <i class="fab fa-instagram"></i> Instagram
+                </label>
+                <input type="text" class="form-control" name="instagram" value="{% if get_config('instagram_open') != None %}{{get_config('instagram_open')}}{% endif %}" placeholder="https://www.instagram.com/js.yell.owl/">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>
+                  Open / Hide
+                </label>
+                <button class="btn btn-block btn-outline-{% if get_config('instagram_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('instagram');" id="instagram_open">{% if get_config('instagram_open') == True %}Open{% else %}Hide{% endif %}</button>
+              </div>
+            </div>
+            <!-- ./ -->
+            <!-- Youtube -->
+            <div class="col-md-9">
+              <div class="form-group">
+                <label>
+                  <i class="fab fa-youtube"></i> Youtube
+                </label>
+                <input type="text" class="form-control" name="youtube" value="{% if get_config('youtube_open') != None %}{{get_config('youtube_open')}}{% endif %}" placeholder="Your youtube">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>
+                  Open / Hide
+                </label>
+                <button class="btn btn-block btn-outline-{% if get_config('youtube_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('youtube');" id="youtube_open">{% if get_config('youtube_open') == True %}Open{% else %}Hide{% endif %}</button>
+              </div>
+            </div>
+            <!-- ./ -->
+            <!-- Github -->
+            <div class="col-md-9">
+              <div class="form-group">
+                <label>
+                  <i class="fab fa-github"></i> Github
+                </label>
+                <input type="text" class="form-control" name="github" value="{% if get_config('github_open') != None %}{{get_config('github_open')}}{% endif %}" placeholder="https://github.com/kkamikoon">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>
+                  Open / Hide
+                </label>
+                <button class="btn btn-block btn-outline-{% if get_config('github_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('github');" id="github_open">{% if get_config('github_open') == True %}Open{% else %}Hide{% endif %}</button>
               </div>
             </div>
           </div>
@@ -266,8 +339,8 @@
         </div>
       </div>  
     </form>
+    <!-- ./ -->
   </div>
 </div>
-
 
 {% endblock %}
