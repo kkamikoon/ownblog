@@ -90,10 +90,10 @@ def configs_users():
 @admin_only
 def configs_users_default(config_type):
     if config_type == "attach":
-        user_attach = Attach.query.filter_by(idx=get_config("user_default_attach")).first()
+        user_attach = Attach.query.filter_by(idx=get_config("user_attach_idx")).first()
 
         if user_attach == None:
-            flash(message=f"No matched user attachment", category="error")
+            # flash(message=f"No matched user attachment", category="error")
             return "No"
 
         user_attach.hidden = not user_attach.hidden
@@ -101,7 +101,7 @@ def configs_users_default(config_type):
         try:
             db.session.commit()
         except Exception as e:
-            flash(message=f"Failed to set default hide status of user attachment", category="error")
+            # flash(message=f"Failed to set default hide status of user attachment", category="error")
             db.session.rollback()
             return "No"
 
