@@ -62,6 +62,7 @@ def setup():
             set_config('recaptcha_secret_key',  recaptcha_secret_key)
             set_config('recaptcha_status',      recaptcha_status)
             
+
             # Admin ----------------------------------------------
             # Admin Attachment Settings
             admin_attach_type       = request.form.get('admin_attach_type')
@@ -120,8 +121,6 @@ def setup():
             user_attach             = Attach(type=user_attach_type,
                                              description=user_attach_description,
                                              hidden=user_attach_hidden)
-
-            set_config("user_default_attach",   user_attach.idx)
             
             # Commit users account
             try:
@@ -133,6 +132,8 @@ def setup():
             else:
                 db.session.commit()
 
+            set_config("user_default_attach",   user_attach.idx)
+
             # Domain ----------------------------------------------
             # Domain Checking
             domain      = request.form.get("domain")
@@ -140,6 +141,19 @@ def setup():
 
             set_config('domain',        domain)
             set_config('domain_check',  domain_check)
+
+            # SNS -------------------------------------------------
+            twitter    = request.form.get("twitter")
+            instagram  = request.form.get("instagram") 
+            github     = request.form.get("github")
+            facebook   = request.form.get("facebook")
+            youtube    = request.form.get("youtube")
+
+            set_config('twitter',   twitter)
+            set_config('instagram', instagram)
+            set_config('github',    github)
+            set_config('facebook',  facebook)
+            set_config('youtube',   youtube)
 
             # Image Upload Directory ------------------------------
             upload_dir  = safe_join(app.root_path, 'static', 'front')

@@ -28,7 +28,7 @@
                 <input type="text" class="form-control" name="intro" value="KKAMIKOON" placeholder="Enter Main Title">
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="form-group">
                 <label>
                   Front Theme
@@ -41,7 +41,7 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="form-group">
                 <label>
                   Admin Theme
@@ -123,7 +123,7 @@
                 <label>
                   Default Verified
                 </label>
-                <button class="btn btn-block btn-outline-{% if get_config('user_default_verified') == True %}success{% else %}secondary{% endif %}" onclick="javascript:user_default('verified');" id="user_default_verified">{% if get_config('user_default_verified') == True %}Verify{% else %}Deny{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('user_default_verified') == True %}success{% else %}secondary{% endif %}" onclick="javascript:user_default('verified');" id="user_default_verified">{% if get_config('user_default_verified') == True %}Verified{% else %}Deny{% endif %}</button>
               </div>
             </div>
             <div class="col-md-4">
@@ -131,7 +131,7 @@
                 <label>
                   Default Banned
                 </label>
-                <button class="btn btn-block btn-outline-{% if get_config('user_default_banned') == True %}success{% else %}secondary{% endif %}" onclick="javascript:user_default('banned');" id="user_default_banned">{% if get_config('user_default_banned') == True %}Verify{% else %}Deny{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('user_default_banned') == True %}success{% else %}secondary{% endif %}" onclick="javascript:user_default('banned');" id="user_default_banned">{% if get_config('user_default_banned') == True %}Banned{% else %}Deny{% endif %}</button>
               </div>
             </div>
             <div class="col-md-4">
@@ -139,7 +139,7 @@
                 <label>
                   Default Hidden
                 </label>
-                <button class="btn btn-block btn-outline-{% if get_config('user_default_hidden') == True %}success{% else %}secondary{% endif %}" onclick="javascript:user_default('hidden');" id="user_default_hidden">{% if get_config('user_default_hidden') == True %}Verify{% else %}Deny{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('user_default_hidden') == True %}success{% else %}secondary{% endif %}" onclick="javascript:user_default('hidden');" id="user_default_hidden">{% if get_config('user_default_hidden') == True %}Hidden{% else %}Deny{% endif %}</button>
               </div>
             </div>
             <!-- ./ -->
@@ -162,7 +162,7 @@
                 <label>
                   Attachment Hidden
                 </label>
-                <button class="btn btn-block btn-outline-{% if get_config('user_attach_hidden') == False %}success{% else %}secondary{% endif %}" onclick="javascript:user_default('attach');" id="user_attach_hidden">{% if get_config('user_attach_hidden') == False %}Show{% else %}Hidden{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('user_attach_hidden') == False %}success{% else %}secondary{% endif %}" onclick="javascript:user_default('attach');" id="user_attach_hidden">{% if get_config('user_attach_hidden') == False %}Show{% else %}Hidden{% endif %}</button>
               </div>
             </div>
             <!-- ./ -->
@@ -193,7 +193,7 @@
                 <label>
                   Domain
                 </label>
-                <input type="text" class="form-control" name="domain" value="example.com" placeholder="Enter your domain it you have.">
+                <input type="text" class="form-control" name="domain" value="{% if get_config('domain') != None %}{{get_config('domain')}}{% endif %}" placeholder="example.com">
               </div>
             </div>
             <div class="col-md-3">
@@ -201,7 +201,7 @@
                 <label>
                   Domain Check
                 </label>
-                <button class="btn btn-block btn-outline-{% if get_config('domain_check') == True %}success{% else %}secondary{% endif %}" onclick="javascript:domain_checking();" id="domain_check">{% if get_config('domain_check') == True %}Checked{% else %}Unchecked{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('domain_check') == True %}success{% else %}secondary{% endif %}" onclick="javascript:domain_checking();" id="domain_check">{% if get_config('domain_check') == True %}Checked{% else %}Unchecked{% endif %}</button>
               </div>
             </div>
           </div>
@@ -252,7 +252,7 @@
                 <label>
                   Open / Hide
                 </label>
-                <button class="btn btn-block btn-outline-{% if get_config('facebook_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('facebook');" id="facebook_open">{% if get_config('facebook_open') == True %}Open{% else %}Hide{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('facebook_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('facebook');" id="facebook_open">{% if get_config('facebook_open') == True %}Open{% else %}Hide{% endif %}</button>
               </div>
             </div>
             <!-- ./ -->
@@ -270,7 +270,7 @@
                 <label>
                   Open / Hide
                 </label>
-                <button class="btn btn-block btn-outline-{% if get_config('twitter_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('twitter');" id="twitter_open">{% if get_config('twitter_open') == True %}Open{% else %}Hide{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('twitter_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('twitter');" id="twitter_open">{% if get_config('twitter_open') == True %}Open{% else %}Hide{% endif %}</button>
               </div>
             </div>
             <!-- ./ -->
@@ -288,7 +288,7 @@
                 <label>
                   Open / Hide
                 </label>
-                <button class="btn btn-block btn-outline-{% if get_config('instagram_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('instagram');" id="instagram_open">{% if get_config('instagram_open') == True %}Open{% else %}Hide{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('instagram_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('instagram');" id="instagram_open">{% if get_config('instagram_open') == True %}Open{% else %}Hide{% endif %}</button>
               </div>
             </div>
             <!-- ./ -->
@@ -306,7 +306,7 @@
                 <label>
                   Open / Hide
                 </label>
-                <button class="btn btn-block btn-outline-{% if get_config('youtube_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('youtube');" id="youtube_open">{% if get_config('youtube_open') == True %}Open{% else %}Hide{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('youtube_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('youtube');" id="youtube_open">{% if get_config('youtube_open') == True %}Open{% else %}Hide{% endif %}</button>
               </div>
             </div>
             <!-- ./ -->
@@ -324,7 +324,7 @@
                 <label>
                   Open / Hide
                 </label>
-                <button class="btn btn-block btn-outline-{% if get_config('github_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('github');" id="github_open">{% if get_config('github_open') == True %}Open{% else %}Hide{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('github_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('github');" id="github_open">{% if get_config('github_open') == True %}Open{% else %}Hide{% endif %}</button>
               </div>
             </div>
           </div>

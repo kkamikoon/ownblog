@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask  import current_app as app
 from flask  import (
     flash,
@@ -73,29 +75,20 @@ def configs_web():
 @admin_only
 def configs_users():
     user_default_attach     = request.form.get("user_default_attach")
-
     user_attach             = Attach.query.filter_by(idx=get_config("user_default_attach")).first()
     
-    # Commit users account
-    try:
-        db.session.commit()
-    except Exception as e:
-        flash(message=f"Failed to edit default user define : {e._message}", category="error")
-        db.session.rollback()
+    if user_attach == None:
+        flash(message=f"Failed to set default user attachment", category="error")
         return redirect(url_for("admin.configs"))
-    else:
-        db.session.commit()
+
+    set_config("user_default_attach", user_default_attach)
     
     return redirect(url_for("admin.configs"))
 
 
-@admin.route("/admin/configs/users/<config>", methods=['GET'])
+@admin.route("/admin/configs/users/<config_type>", methods=['GET'])
 @admin_only
-def configs_users_default(config):
-    config_type={   "verified"  : get_config("user_default_verified"),
-                    "hidden"    : get_config("user_default_hidden"),
-                    "banned"    : get_config("user_default_banned")}.get(config, "attach")
-    
+def configs_users_default(config_type):
     if config_type == "attach":
         user_attach = Attach.query.filter_by(idx=get_config("user_default_attach")).first()
 
@@ -104,16 +97,16 @@ def configs_users_default(config):
         try:
             db.session.commit()
         except Exception as e:
-            flash(message=f"Failed to set default user attachment hide status", category="error")
+            flash(message=f"Failed to set default hide status of user attachment", category="error")
             db.session.rollback()
             return "No"
 
         return str(bool(user_attach.hidden))
 
     else: # verified, hidden, banned
-        set_config(f"user_default_{config}", not config_type.get(config))
+        set_config(f"user_default_{config_type}", not get_config(f"user_default_{config_type}"))
 
-        return str(bool(config_type.get(config)))
+        return str(bool(get_config(f"user_default_{config_type}")))
     
     return "No"
 
@@ -123,25 +116,21 @@ def configs_users_default(config):
 def configs_domain():    
     # User can only connect this domain if you `domain_check` set True
     domain      = request.form.get("domain")
-    domain_check= request.form.get("domain_check")
 
     set_config('domain',        domain)
-    set_config('domain_check',  domain_check)
 
     return redirect(url_for("admin.configs"))
 
+    
 
-
-@admin.route("/admin/configs/sns/<sns_type>", methods=['POST'])
+@admin.route("/admin/configs/sns", methods=['POST'])
 @admin_only
-def configs_sns(sns_type):
-
-
-    twitter    = (request.form.get("twitter")   != None) # if not None == True
-    instagram  = (request.form.get("instagram") != None) 
-    github     = (request.form.get("github")    != None)
-    facebook   = (request.form.get("facebook")  != None)
-    youtube    = (request.form.get("youtube")   != None)
+def configs_sns():
+    twitter    = request.form.get("twitter")
+    instagram  = request.form.get("instagram") 
+    github     = request.form.get("github")
+    facebook   = request.form.get("facebook")
+    youtube    = request.form.get("youtube")
 
     set_config('twitter',   twitter)
     set_config('instagram', instagram)
