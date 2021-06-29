@@ -112,7 +112,7 @@ def setup():
             user_default_banned     = request.form.get('user_default_banned')
             user_attach_type        = request.form.get('user_attach_type')
             user_attach_description = request.form.get('user_attach_description')
-            user_attach_hidden      = request.form.get('user_attach_hidden', type=int)
+            user_default_attach     = request.form.get('user_default_attach', type=int)
 
             set_config('user_default_verified', user_default_verified)
             set_config('user_default_hidden',   user_default_hidden)
@@ -120,7 +120,7 @@ def setup():
 
             user_attach             = Attach(type=user_attach_type,
                                              description=user_attach_description,
-                                             hidden=user_attach_hidden)
+                                             hidden=user_default_attach)
             
             # Commit users account
             try:
@@ -132,7 +132,7 @@ def setup():
             else:
                 db.session.commit()
 
-            set_config("user_default_attach",   user_attach.idx)
+            set_config("user_attach_idx",   user_attach.idx)
 
             # Domain ----------------------------------------------
             # Domain Checking

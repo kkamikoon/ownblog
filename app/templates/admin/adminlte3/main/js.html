@@ -140,7 +140,7 @@ $("#sub_categories_table").DataTable({
       cache:  false,
       success:function(html){
         if (html == "No"){
-          toastr.success("Failed to update hidden");
+          toastr.error("Error occuring");
         }
         else{
           ele = document.getElementById("post_hidden_"+post_idx);
@@ -186,25 +186,27 @@ $("#sub_categories_table").DataTable({
 <!-- Configs -->
 <script>
   function user_default(config){
-    console.log(config);
     $.ajax({
       type:   "GET",
       url:    "/admin/configs/users/" + config,
       cache:  false,
       success:function(html){
-        console.log("")
+        console.log(html)
+
         if (html == "No"){
-          toastr.success("Failed to update hidden");
+          toastr.error("Error occuring");
         }
         else{
           ele = document.getElementById("user_default_"+config);
-
+          
           if (html == "True"){
-            ele.innerText = config.charAt(0).toUpperCase() + config.slice(1);
+            if (config == "attach") ele.innerText = "Show"
+            else                    ele.innerText = config.charAt(0).toUpperCase() + config.slice(1)
             ele.classList.replace("btn-outline-secondary", "btn-outline-success");
           }
           else{
-            ele.innerText = "Deny";
+            if (config == "attach") ele.innerText = "Hidden"
+            else                    ele.innerText = config.charAt(0).toUpperCase() + config.slice(1)
             ele.classList.replace("btn-outline-success", "btn-outline-secondary");
           }
         }        

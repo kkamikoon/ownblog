@@ -94,8 +94,8 @@
                   reCaptcha On/Off
                 </label>
                 <select class="form-control" name="recaptcha_status">
-                  <option value="0" {% if get_config('recaptcha_status') == 0 %} selected {% endif %}>False</option>
-                  <option value="1" {% if get_config('recaptcha_status') == 1 %} selected {% endif %}>True</option>
+                  <option value="0" selected>False</option>
+                  <option value="1">True</option>
                 </select>
               </div>
             </div>
@@ -165,8 +165,8 @@
                   Attachment Hidden
                 </label>
                 <select class="form-control" name="admin_attach_hidden">
-                  <option value="1" {% if get_config('admin_attach_hidden') == 1 %} selected {% endif %}>True</option>
-                  <option value="0" {% if get_config('admin_attach_hidden') == 0 %} selected {% endif %}>False</option>
+                  <option value="0">False</option>
+                  <option value="1" selected>True</option>
                 </select>
               </div>
             </div>
@@ -195,8 +195,8 @@
                   User Default Verified
                 </label>
                 <select class="form-control" name="user_default_verified">
-                  <option value="0" {% if get_config('user_default_verified') == 0 %} selected {% endif %}>False</option>
-                  <option value="1" {% if get_config('user_default_verified') == 1 %} selected {% endif %}>True</option>
+                  <option value="0" selected>False</option>
+                  <option value="1">True</option>
                 </select>
               </div>
             </div>
@@ -206,8 +206,8 @@
                   User Default Banned
                 </label>
                 <select class="form-control" name="user_default_banned">
-                  <option value="0" {% if get_config('user_default_banned') == 0 %} selected {% endif %}>False</option>
-                  <option value="1" {% if get_config('user_default_banned') == 1 %} selected {% endif %}>True</option>
+                  <option value="0" selected>False</option>
+                  <option value="1">True</option>
                 </select>
               </div>
             </div>
@@ -217,8 +217,8 @@
                   User Default Hidden
                 </label>
                 <select class="form-control" name="user_default_hidden">
-                  <option value="0" {% if get_config('user_default_hidden') == 0 %} selected {% endif %}>False</option>
-                  <option value="1" {% if get_config('user_default_hidden') == 1 %} selected {% endif %}>True</option>
+                  <option value="0" selected >False</option>
+                  <option value="1">True</option>
                 </select>
               </div>
             </div>
@@ -246,9 +246,9 @@
                 <label>
                   Attachment Hidden
                 </label>
-                <select class="form-control" name="user_attach_hidden">
-                  <option value="0" {% if get_config('user_attach_hidden') == 0 %} selected {% endif %}>False</option>
-                  <option value="1" {% if get_config('user_attach_hidden') == 1 %} selected {% endif %}>True</option>
+                <select class="form-control" name="user_default_attach">
+                  <option value="0" selected>False</option>
+                  <option value="1">True</option>
                 </select>
               </div>
             </div>

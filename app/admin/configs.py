@@ -74,14 +74,14 @@ def configs_web():
 @admin.route("/admin/configs/users", methods=['POST'])
 @admin_only
 def configs_users():
-    user_default_attach     = request.form.get("user_default_attach")
-    user_attach             = Attach.query.filter_by(idx=get_config("user_default_attach")).first()
+    user_attach_idx = request.form.get("user_attach_idx")
+    user_attach     = Attach.query.filter_by(idx=user_attach_idx).first()
     
     if user_attach == None:
         flash(message=f"Failed to set default user attachment", category="error")
         return redirect(url_for("admin.configs"))
 
-    set_config("user_default_attach", user_default_attach)
+    set_config("user_attach_idx", user_attach_idx)
     
     return redirect(url_for("admin.configs"))
 
@@ -91,6 +91,10 @@ def configs_users():
 def configs_users_default(config_type):
     if config_type == "attach":
         user_attach = Attach.query.filter_by(idx=get_config("user_default_attach")).first()
+
+        if user_attach == None:
+            flash(message=f"No matched user attachment", category="error")
+            return "No"
 
         user_attach.hidden = not user_attach.hidden
 

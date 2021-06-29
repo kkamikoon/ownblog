@@ -162,7 +162,7 @@
                 <label>
                   Attachment Hidden
                 </label>
-                <button type="button" class="btn btn-block btn-outline-{% if get_config('user_attach_hidden') == False %}success{% else %}secondary{% endif %}" onclick="javascript:user_default('attach');" id="user_attach_hidden">{% if get_config('user_attach_hidden') == False %}Show{% else %}Hidden{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('user_default_attach') == False %}success{% else %}secondary{% endif %}" onclick="javascript:user_default('attach');" id="user_default_attach">{% if get_config('user_default_attach') == False %}Show{% else %}Hidden{% endif %}</button>
               </div>
             </div>
             <!-- ./ -->
