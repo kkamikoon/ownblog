@@ -209,31 +209,30 @@ $("#sub_categories_table").DataTable({
             else                    ele.innerText = "Deny"
             ele.classList.replace("btn-outline-success", "btn-outline-secondary");
           }
-        }        
+        }
       }
     });
   }
 
-  function sns_config(config){
-    console.log(config);
+  function sns_status(type){
     $.ajax({
       type:   "GET",
-      url:    "/admin/configs/users/" + config,
+      url:    "/admin/configs/sns/" + type,
       cache:  false,
       success:function(html){
         if (html == "No"){
           toastr.success("Failed to update hidden");
         }
         else{
-          ele = document.getElementById(config);
+          ele = document.getElementById(type + "_open");
 
           if (html == "True"){
-            ele.innerText = "Hidden";
-            ele.classList.replace("btn-outline-success", "btn-outline-secondary");
-          }
-          else{
             ele.innerText = "Open";
             ele.classList.replace("btn-outline-secondary", "btn-outline-success");
+          }
+          else{
+            ele.innerText = "Hide";
+            ele.classList.replace("btn-outline-success",   "btn-outline-secondary");
           }
         }        
       }

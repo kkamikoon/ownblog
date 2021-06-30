@@ -130,17 +130,32 @@ def configs_domain():
 @admin.route("/admin/configs/sns", methods=['POST'])
 @admin_only
 def configs_sns():
+    facebook   = request.form.get("facebook")
     twitter    = request.form.get("twitter")
     instagram  = request.form.get("instagram") 
-    github     = request.form.get("github")
-    facebook   = request.form.get("facebook")
     youtube    = request.form.get("youtube")
-
-    set_config('twitter',   twitter)
-    set_config('instagram', instagram)
-    set_config('github',    github)
+    github     = request.form.get("github")
+    
     set_config('facebook',  facebook)
+    set_config('twitter',   twitter)
+    set_config('instagram', instagram)    
     set_config('youtube',   youtube)
+    set_config('github',    github)
 
     return redirect(url_for("admin.configs"))
+
+
+@admin.route("/admin/configs/sns/<sns_type>", methods=['GET'])
+@admin_only
+def configs_sns_status(sns_type):
+    status = get_config(f"{sns_type}_open")
+
+    if status == None:
+        set_config(f"{sns_type}_open", True)
+        return str(True)
+    
+    set_config(f"{sns_type}_open", not status)
+
+    return str(not bool(status))
+
 

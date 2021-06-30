@@ -47,6 +47,33 @@
           </ul>
         
           <div class="text-center">
+            {% if get_config("facebook_open") %}
+            <a {% if get_config('facebook') != None %}href="{{get_config('facebook')}}" target="_blank" {% else %} href="#" {% endif %} class="text-white fs-5 me-2">
+              <i class="bi bi-facebook"></i>
+            </a>
+            {% endif %}
+            {% if get_config("twitter_open") %}
+            <a {% if get_config('twitter') != None %}href="{{get_config('twitter')}}" target="_blank" {% else %} href="#" {% endif %} class="text-white fs-5 me-2">
+              <i class="bi bi-twitter"></i>
+            </a>
+            {% endif %}
+            {% if get_config("instagram_open") %}
+            <a {% if get_config('instagram') != None %}href="{{get_config('instagram')}}" target="_blank" {% else %} href="#" {% endif %} class="text-white fs-5 me-2">
+              <i class="bi bi-instagram"></i>
+            </a>
+            {% endif %}
+            {% if get_config("youtube_open") %}
+            <a {% if get_config('youtube') != None %}href="{{get_config('youtube')}}" target="_blank" {% else %} href="#" {% endif %} class="text-white fs-5 me-2">
+              <i class="bi bi-youtube"></i>
+            </a>
+            {% endif %}
+            {% if get_config("github_open") %}
+            <a {% if get_config('github') != None %}href="{{get_config('github')}}" target="_blank" {% else %} href="#" {% endif %} class="text-white fs-5 me-2">
+              <i class="bi bi-github"></i>
+            </a>
+            {% endif %}
+
+
             {% if authed() %}
             <a href="/sign/out" class="btn btn-outline-light me-2">Sign-Out</a>
             {% else%}

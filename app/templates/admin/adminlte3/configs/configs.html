@@ -231,7 +231,7 @@
   <!-- SNS configs -->
   <div class="col-md-4">
     <!-- SNS config -->
-    <form action="/admin/configs/domain" method="POST">
+    <form action="/admin/configs/sns" method="POST">
       <div class="card card-secondary card-outline">
         <div class="card-header">
           <h2 class="card-title">SNS - Configs</h2>
@@ -244,7 +244,7 @@
                 <label>
                   <i class="fab fa-facebook"></i> Facebook
                 </label>
-                <input type="text" class="form-control" name="facebook" value="{% if get_config('facebook_open') != None %}{{get_config('facebook_open')}}{% endif %}" placeholder="https://fb.com/goldstar.hack">
+                <input type="text" class="form-control" name="facebook" value="{% if get_config('facebook') != None %}{{get_config('facebook')}}{% endif %}" placeholder="https://fb.com/goldstar.hack">
               </div>
             </div>
             <div class="col-md-3">
@@ -252,7 +252,7 @@
                 <label>
                   Open / Hide
                 </label>
-                <button type="button" class="btn btn-block btn-outline-{% if get_config('facebook_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('facebook');" id="facebook_open">{% if get_config('facebook_open') == True %}Open{% else %}Hide{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('facebook_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_status('facebook');" id="facebook_open">{% if get_config('facebook_open') == True %}Open{% else %}Hide{% endif %}</button>
               </div>
             </div>
             <!-- ./ -->
@@ -262,7 +262,7 @@
                 <label>
                   <i class="fab fa-twitter"></i> Twitter
                 </label>
-                <input type="text" class="form-control" name="twitter" value="{% if get_config('twitter_open') != None %}{{get_config('twitter_open')}}{% endif %}" placeholder="Your twitter">
+                <input type="text" class="form-control" name="twitter" value="{% if get_config('twitter') != None %}{{get_config('twitter')}}{% endif %}" placeholder="Your twitter">
               </div>
             </div>
             <div class="col-md-3">
@@ -270,7 +270,7 @@
                 <label>
                   Open / Hide
                 </label>
-                <button type="button" class="btn btn-block btn-outline-{% if get_config('twitter_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('twitter');" id="twitter_open">{% if get_config('twitter_open') == True %}Open{% else %}Hide{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('twitter_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_status('twitter');" id="twitter_open">{% if get_config('twitter_open') == True %}Open{% else %}Hide{% endif %}</button>
               </div>
             </div>
             <!-- ./ -->
@@ -280,7 +280,7 @@
                 <label>
                   <i class="fab fa-instagram"></i> Instagram
                 </label>
-                <input type="text" class="form-control" name="instagram" value="{% if get_config('instagram_open') != None %}{{get_config('instagram_open')}}{% endif %}" placeholder="https://www.instagram.com/js.yell.owl/">
+                <input type="text" class="form-control" name="instagram" value="{% if get_config('instagram') != None %}{{get_config('instagram')}}{% endif %}" placeholder="https://www.instagram.com/js.yell.owl/">
               </div>
             </div>
             <div class="col-md-3">
@@ -288,7 +288,7 @@
                 <label>
                   Open / Hide
                 </label>
-                <button type="button" class="btn btn-block btn-outline-{% if get_config('instagram_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('instagram');" id="instagram_open">{% if get_config('instagram_open') == True %}Open{% else %}Hide{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('instagram_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_status('instagram');" id="instagram_open">{% if get_config('instagram_open') == True %}Open{% else %}Hide{% endif %}</button>
               </div>
             </div>
             <!-- ./ -->
@@ -298,7 +298,7 @@
                 <label>
                   <i class="fab fa-youtube"></i> Youtube
                 </label>
-                <input type="text" class="form-control" name="youtube" value="{% if get_config('youtube_open') != None %}{{get_config('youtube_open')}}{% endif %}" placeholder="Your youtube">
+                <input type="text" class="form-control" name="youtube" value="{% if get_config('youtube') != None %}{{get_config('youtube')}}{% endif %}" placeholder="Your youtube">
               </div>
             </div>
             <div class="col-md-3">
@@ -306,7 +306,7 @@
                 <label>
                   Open / Hide
                 </label>
-                <button type="button" class="btn btn-block btn-outline-{% if get_config('youtube_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('youtube');" id="youtube_open">{% if get_config('youtube_open') == True %}Open{% else %}Hide{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('youtube_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_status('youtube');" id="youtube_open">{% if get_config('youtube_open') == True %}Open{% else %}Hide{% endif %}</button>
               </div>
             </div>
             <!-- ./ -->
@@ -316,7 +316,7 @@
                 <label>
                   <i class="fab fa-github"></i> Github
                 </label>
-                <input type="text" class="form-control" name="github" value="{% if get_config('github_open') != None %}{{get_config('github_open')}}{% endif %}" placeholder="https://github.com/kkamikoon">
+                <input type="text" class="form-control" name="github" value="{% if get_config('github') != None %}{{get_config('github')}}{% endif %}" placeholder="https://github.com/kkamikoon/ownblog">
               </div>
             </div>
             <div class="col-md-3">
@@ -324,7 +324,7 @@
                 <label>
                   Open / Hide
                 </label>
-                <button type="button" class="btn btn-block btn-outline-{% if get_config('github_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_open('github');" id="github_open">{% if get_config('github_open') == True %}Open{% else %}Hide{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('github_open') == True %}success{% else %}secondary{% endif %}" onclick="javascript:sns_status('github');" id="github_open">{% if get_config('github_open') == True %}Open{% else %}Hide{% endif %}</button>
               </div>
             </div>
           </div>

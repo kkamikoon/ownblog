@@ -143,17 +143,17 @@ def setup():
             set_config('domain_check',  domain_check)
 
             # SNS -------------------------------------------------
+            facebook   = request.form.get("facebook")
             twitter    = request.form.get("twitter")
             instagram  = request.form.get("instagram") 
-            github     = request.form.get("github")
-            facebook   = request.form.get("facebook")
             youtube    = request.form.get("youtube")
-
-            set_config('twitter',   twitter)
-            set_config('instagram', instagram)
-            set_config('github',    github)
+            github     = request.form.get("github")
+            
             set_config('facebook',  facebook)
+            set_config('twitter',   twitter)
+            set_config('instagram', instagram)    
             set_config('youtube',   youtube)
+            set_config('github',    github)
 
             # Image Upload Directory ------------------------------
             upload_dir  = safe_join(app.root_path, 'static', 'front')
