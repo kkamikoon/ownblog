@@ -1,19 +1,24 @@
 {% extends '/front/' + get_config('front_theme') + '/main/layout.html' %}
 {% block main %}
 
-<div class="py-5">
-  <div class="col-lg-10 mx-auto markdown-style">
-    {% if about == None %}
+{% if about == None %}
+<div class="bg-dark text-secondary px-4 py-5 text-center">
+  <div class="py-5">
     <h1 class="display-5 fw-bold text-white">None posts</h1>
     <div class="col-lg-6 mx-auto">
       <p class="fs-5 mb-4">
         No posts yet....
       </p>
     </div>
-    {% else %}
-    {{about | markdown}}
-    {% endif %}
   </div>
 </div>
+
+{% else %}
+<div class="py-5">
+  <div class="col-lg-10 mx-auto markdown-style"> 
+    {{about | markdown}}
+  </div>
+</div>
+{% endif %}
 
 {% endblock %}
