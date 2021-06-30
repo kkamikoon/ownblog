@@ -5,7 +5,7 @@ from flask.helpers          import safe_join
 from flask                  import session
 
 from app.utils              import get_config
-from app.models             import db, Categories
+from app.models             import db, Categories, SubCategories
 
 from uuid                   import uuid4
 
@@ -16,6 +16,31 @@ def get_categories():
 def get_category(idx):
     return Categories.query.filter_by(idx=idx).first()
 
+
+def get_subcategories():
+    return SubCategories.query.all()
+
+
+def get_subcategories_of_category(category_idx):
+    return SubCategories.query.filter_by(category_idx=category_idx).all()
+
+
+def get_all_categories():
+    categories      = Categories.query.all()
+    all_categories  = []
+
+    for category in categories:
+        # Categories
+        all_categories.append({ "name"          : category.name,
+                                "hidden"        : category.hidden,
+                                "category_idx"  : None})
+        # Sub categories
+        for sub in SubCategories.query.filter_by(category_idx=category.idx):
+            all_categories.append({ "name"          : sub.name,
+                                    "hidden"        : sub.hidden,
+                                    "category_idx"  : sub.category_idx  })
+
+    return all_categories
 
 def get_tmp_dir():
     tmp = safe_join(app.root_path, f"static", f"front", f"themes", get_config("front_theme"), f"tmp_{session.get('nonce')}")

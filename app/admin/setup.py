@@ -154,6 +154,7 @@ def setup():
             set_config('instagram', instagram)    
             set_config('youtube',   youtube)
             set_config('github',    github)
+            # SNS Open setting is not 
 
             # Image Upload Directory ------------------------------
             upload_dir  = safe_join(app.root_path, 'static', 'front')

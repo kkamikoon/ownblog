@@ -8,13 +8,17 @@
           <div class="row">
             <div class="mb-3 col-md-2">
               <select class="form-control select2 select2-warning" data-dropdown-css-class="select2-warning" name="category_idx">
-                {% if get_categories() | length == 0 %}
+              {% if get_all_categories() | length == 0 %}
                 <option value="">No categories...</option>
+              {% else %}
+              {% for category in get_all_categories() %}
+                {% if category.category_idx == None %}
+                <option value="{{category.idx}}">{{category.name}}</option>
                 {% else %}
-                {% for category in get_categories() %}
-                <option value="{{category.idx}}" {% if category.idx == post.category_idx %}selected{% endif %}>{{category.name}}</option>
-                {% endfor %}
+                <option value="{{category.idx}}">- {{category.name}}</option>
                 {% endif %}
+              {% endfor %}
+              {% endif %}
               </select>
             </div>
             <div class="col-md-12">

@@ -24,6 +24,7 @@ from app.utils.url import (
 )
 
 from app.utils.blog import (
+    get_all_categories,
     get_categories,
     get_category
 )
@@ -66,6 +67,7 @@ def init_template_globals(app):
     app.jinja_env.globals.update(in_whitelist=in_whitelist)
 
     # Blog utils
+    app.jinja_env.globals.update(get_all_categories=get_all_categories)
     app.jinja_env.globals.update(get_categories=get_categories)
     app.jinja_env.globals.update(get_category=get_category)
     app.jinja_env.globals.update(get_tags=get_tags)
