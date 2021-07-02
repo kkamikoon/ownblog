@@ -87,16 +87,19 @@ class Posts(db.Model):
     __table_args__  = {'mysql_collate' : "utf8_general_ci"}
 
     # Core Attributes
-    idx         = db.Column(db.Integer,     primary_key=True)
-    category_idx= db.Column(db.Integer,     db.ForeignKey(  'categories.idx',
-                                                            ondelete="SET NULL",
-                                                            onupdate="CASCADE"))
-    title       = db.Column(db.String(256))
-    abstract    = db.Column(db.String(512))
-    filename    = db.Column(db.String(512), unique=True)
-    fullpath    = db.Column(db.String(2048))
-    hidden      = db.Column(db.Integer,     default=True)
-    date        = db.Column(db.DateTime,    default=datetime.datetime.utcnow)
+    idx             = db.Column(db.Integer,     primary_key=True)
+    category_idx    = db.Column(db.Integer,     db.ForeignKey(  'categories.idx',
+                                                                ondelete="SET NULL",
+                                                                onupdate="CASCADE"))
+    sub_category_idx= db.Column(db.Integer,     db.ForeignKey(  'sub_categories.idx',
+                                                                ondelete="SET NULL",
+                                                                onupdate="CASCADE"))
+    title           = db.Column(db.String(256))
+    abstract        = db.Column(db.String(512))
+    filename        = db.Column(db.String(512), unique=True)
+    fullpath        = db.Column(db.String(2048))
+    hidden          = db.Column(db.Integer,     default=True)
+    date            = db.Column(db.DateTime,    default=datetime.datetime.utcnow)
 
 
 class PostImages(db.Model):

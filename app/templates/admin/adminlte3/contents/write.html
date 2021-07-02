@@ -7,15 +7,15 @@
         <div class="card-header">
           <div class="row">
             <div class="mb-3 col-md-2 markdown-category">
-              <select class="form-control select2 select2-warning" data-dropdown-css-class="select2-warning" name="category_idx">
+              <select class="form-control select2 select2-warning" data-dropdown-css-class="select2-warning" name="category_idxs">
               {% if get_all_categories() | length == 0 %}
                 <option value="">No categories...</option>
               {% else %}
-              {% for category in get_all_categories() %}
-                {% if category.category_idx == None %}
-                <option value="{{category.idx}}">{{category.name}}</option>
+              {% for c in get_all_categories() %}
+                {% if c.category_idx == None %}
+                <option value="{{c.category_idx}}:">{{c.name}}</option>
                 {% else %}
-                <option value="{{category.idx}}">- {{category.name}}</option>
+                <option value="{{c.category_idx}}:{{c.sub_category_idx}}">- {{c.name}}</option>
                 {% endif %}
               {% endfor %}
               {% endif %}

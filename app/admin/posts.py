@@ -67,14 +67,15 @@ def posts():
 def posts_add():
     # Request method check
     if request.method == "POST":
-        title           = request.form.get("title")
-        category_idx    = request.form.get("category_idx")
-        body            = request.form.get("body")
-        abstract        = request.form.get("abstract")
+        title           = request.form.get("title",         type=str, default="Empty Title")
+        category_idxs   = request.form.get("category_idxs", type=str, default=None)
+        body            = request.form.get("body",          type=str, default="Empty Body")
+        abstract        = request.form.get("abstract",      type=str, default="No abstract")
         tags            = request.form.get("tags").split(" ")
 
-        if category_idx == "":
-            flash(message="Be calm... Your post is just saved in temp. Set your categories first.", category="warning")
+        if category_idxs == None:
+            # flash(message="Be calm... Your post is just saved in temp. Set your categories first.", category="warning")
+            flash(message="Set your categories first.", category="warning")
             return redirect(url_for("admin.categories"))
         
         # Temp image upload to upload path. And replace temp path to upload path
@@ -105,8 +106,18 @@ def posts_add():
         with open(file_for_upload, "w") as upload_file_w:
             upload_file_w.write(body)
 
+        # Split category idx
+        cate_subcate    = category_idxs.split(":")
+        c_idx           = cate_subcate[0]
+
+        if cate_subcate[1] == "":
+            sc_idx = None
+        else:
+            sc_idx = cate_subcate[1]
+
         post    = Posts(title=title,
-                        category_idx=category_idx,
+                        category_idx=c_idx,
+                        sub_category_idx=sc_idx,
                         abstract=abstract,
                         filename=file_for_upload.split("/")[-1],
                         fullpath=file_for_upload)
@@ -182,7 +193,7 @@ def posts_detail(post_idx):
     # Edit function
     if request.method == "POST":
         title               = request.form.get("title")
-        category_idx        = request.form.get("category_idx")
+        category_idxs       = request.form.get("category_idxs") # Category : Sub Category
         body                = request.form.get("body")
         abstract            = request.form.get("abstract")
         new_tags            = request.form.get("tags").split(" ")
@@ -191,12 +202,22 @@ def posts_detail(post_idx):
         file_for_upload = get_post_upload_path(title=title)
         shutil.move(post.fullpath, file_for_upload)
 
+        # Split category idx
+        cate_subcate    = category_idxs.split(":")
+        c_idx           = cate_subcate[0]
+
+        if cate_subcate[1] == "":
+            sc_idx = None
+        else:
+            sc_idx = cate_subcate[1]
+
         # update database(Posts)
-        post.title          = title
-        post.category_idx   = category_idx
-        post.abstract       = abstract
-        post.filename       = file_for_upload.split("/")[-1]
-        post.fullpath       = file_for_upload
+        post.title              = title
+        post.category_idx       = c_idx
+        post.sub_category_idx   = sc_idx
+        post.abstract           = abstract
+        post.filename           = file_for_upload.split("/")[-1]
+        post.fullpath           = file_for_upload
 
         try:
             db.session.commit()
@@ -293,6 +314,9 @@ def posts_detail(post_idx):
         
     # GET Method
     body = open(post.fullpath, "r", encoding="utf-8").read()
+
+    print(post.category_idx)
+    print(post.sub_category_idx)
 
     return render_template( f"/admin/{get_config('admin_theme')}/contents/posts_detail.html",
                             post=post,

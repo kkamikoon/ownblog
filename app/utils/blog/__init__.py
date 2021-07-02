@@ -31,14 +31,16 @@ def get_all_categories():
 
     for category in categories:
         # Categories
-        all_categories.append({ "name"          : category.name,
-                                "hidden"        : category.hidden,
-                                "category_idx"  : None})
+        all_categories.append({ "name"              : category.name,
+                                "hidden"            : category.hidden,
+                                "category_idx"      : category.idx,
+                                "sub_category_idx"  : None,})
         # Sub categories
         for sub in SubCategories.query.filter_by(category_idx=category.idx):
-            all_categories.append({ "name"          : sub.name,
-                                    "hidden"        : sub.hidden,
-                                    "category_idx"  : sub.category_idx  })
+            all_categories.append({ "name"              : sub.name,
+                                    "hidden"            : sub.hidden,
+                                    "category_idx"      : sub.category_idx,
+                                    "sub_category_idx"  : sub.idx,})
 
     return all_categories
 
