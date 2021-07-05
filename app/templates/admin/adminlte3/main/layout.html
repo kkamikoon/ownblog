@@ -135,7 +135,7 @@
             {% if is_setup() %}
             <!-- <li class="nav-item {%if current_endpoint() in ['admin.posts', 'admin.posts_add', 'admin.categories'] %}menu-open{% endif %}"> -->
             <li class="nav-item menu-open">
-              <a href="#" class="nav-link {%if current_endpoint() in ['admin.posts', 'admin.posts_add', 'admin.categories'] %}active{% endif %}">
+              <a href="#" class="nav-link {%if current_endpoint() in ['admin.posts', 'admin.posts_add', 'admin.categories', 'admin.categories_detail', 'admin.categories_sub_detail'] %}active{% endif %}">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
                   Contents
@@ -152,7 +152,7 @@
               </ul>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/admin/categories" class="nav-link {%if current_endpoint() == 'admin.categories' %}active{% endif %}">
+                  <a href="/admin/categories" class="nav-link {%if current_endpoint() in ['admin.categories', 'admin.categories_detail', 'admin.categories_sub_detail'] %}active{% endif %}">
                     <i class="fas fa-genderless nav-icon"></i>
                     <p>Categories</p>
                   </a>
@@ -215,10 +215,10 @@
                 <li class="breadcrumb-item">
                   <a href="/">Home</a>
                 </li>
-                {% if current_endpoint() in ["admin.host_detail"] %}
+                {% if current_endpoint() in ['admin.categories_detail', 'admin.categories_sub_detail'] %}
                 <li class="breadcrumb-item active">
-                  {% if "host" in current_endpoint() %}
-                  <a href="/admin/hosts">Hosts</a>
+                  {% if "categories" in current_endpoint() %}
+                  <a href="/admin/categories">Categories</a>
                   {% endif %}
                 </li>
                 <li class="breadcrumb-item active">

@@ -11,30 +11,30 @@
         </h3>
       </div>
       {% if subcategory != None %}
+      <!-- Sub Categories -->
       <form method="POST" action="/admin/categories/sub/{{subcategory.idx}}">
       {% else %}
+      <!-- Categories -->
       <form method="POST" action="/admin/categories/{{category.idx}}">
       {% endif %}
         <div class="card-body">
           {% if subcategory != None %}
-          <input type="hidden" class="form-control" name="category_idx" value="{{category.idx}}" required>
+          <!-- Parent Categories -->
           <div class="form-group">
             <label>Parent Category</label>
-            <select class="form-control selectpicker" data-style="btn btn-link" name="parent_category">
+            <select class="form-control selectpicker" data-style="btn btn-link" name="category_idx">
               {% for c in categories %}
-              <option value="0" {% if c.category_idx == subcategory.category_idx %} selected {% endif %}>{{c.name}}</option>
+              <option value="{{c.idx}}" {% if c.idx == subcategory.category_idx %} selected {% endif %}>{{c.name}}</option>
               {% endfor %}
             </select>
           </div>
 
           <div class="form-group">
-            <label>Name</label>
             <input type="text" class="form-control" name="name" placeholder="Sub category name" autocomplete="off" value="{{subcategory.name}}"required>
           </div>
 
           {% else %}
           <div class="form-group">
-            <label>Name</label>
             <input type="text" class="form-control" name="name" placeholder="Category name" autocomplete="off" value="{{category.name}}"required>
           </div>
           {% endif %}
@@ -72,7 +72,6 @@
         <div class="card-body">
           <p>Are your sure to delete this category?</p>
           <div class="form-group">
-            <label>Name</label>
             {% if subcategory != None %}
             <input type="hidden" class="form-control" name="subcategory" value="{{subcategory.idx}}" autocomplete="off" required>
             <input type="text" class="form-control" name="name" placeholder="{{subcategory.name}}" autocomplete="off" required>

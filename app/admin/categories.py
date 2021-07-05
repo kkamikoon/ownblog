@@ -107,7 +107,7 @@ def categories_sub_detail(sub_category_idx):
     '''
     Detail of sub-categories
     '''
-    subcategory = SubCategories.query.filter_by(idx=sub_category_idx).first()
+    subcategory = SubCategories.query.filter_by(idx=sub_category_idx).first() # Sub Category
     categories  = Categories.query.all()
 
     if subcategory == None:
@@ -119,22 +119,15 @@ def categories_sub_detail(sub_category_idx):
         name            = request.form.get("name",              type=str)
         category_idx    = request.form.get("category_idx",      type=int)
 
-        parent_category = request.form.get("parent_category",   type=int)
-
         # Supplementary attributes
         hidden          = (request.form.get("hidden")   != None) # if not None == True
-
-        # check valid category idx
-        if category_idx == None or category_idx != subcategory.category_idx:
-            flash(message=f"None matched category and sub category", category="error")
-            return redirect(url_for(".categories_sub_detail", sub_category_idx=sub_category_idx))
-
+        
         # check valid value of parent_category (changed value)
-        if parent_category not in [ category.idx for category in categories ]:
+        if category_idx not in [ category.idx for category in categories ]:
             flash(message=f"None matched parent category in categories", category="error")
             return redirect(url_for(".categories_sub_detail", sub_category_idx=sub_category_idx))
 
-        subcategory.category_idx= parent_category
+        subcategory.category_idx= category_idx
         subcategory.name        = name
         hidden                  = hidden
 
@@ -149,9 +142,9 @@ def categories_sub_detail(sub_category_idx):
         return redirect(url_for(".categories"))
     
     return render_template( f"/admin/{get_config('admin_theme')}/contents/categories_detail.html",
-                            category=subcategory.category_idx,
-                            categories=categories,
-                            subcategory=subcategory)
+                            category=None,
+                            subcategory=subcategory,
+                            categories=categories)
 
 
 @admin.route("/admin/categories/del/<int:category_idx>", methods=['POST'])
