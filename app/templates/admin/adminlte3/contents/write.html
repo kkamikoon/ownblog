@@ -12,7 +12,7 @@
                 <option value="">No categories...</option>
               {% else %}
               {% for c in get_all_categories() %}
-                {% if c.category_idx == None %}
+                {% if c.sub_category_idx == None %}
                 <option value="{{c.category_idx}}:">{{c.name}}</option>
                 {% else %}
                 <option value="{{c.category_idx}}:{{c.sub_category_idx}}">- {{c.name}}</option>

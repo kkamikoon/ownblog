@@ -103,7 +103,7 @@ def posts_add():
         # markdown file saving
         file_for_upload = get_post_upload_path(title=title)
 
-        with open(file_for_upload, "w") as upload_file_w:
+        with open(file_for_upload, "w", encoding="utf-8") as upload_file_w:
             upload_file_w.write(body)
 
         # Split category idx
@@ -121,6 +121,8 @@ def posts_add():
                         abstract=abstract,
                         filename=file_for_upload.split("/")[-1],
                         fullpath=file_for_upload)
+                        
+        print(f"[=] post : {post}")
 
         try:
             db.session.add(post)
