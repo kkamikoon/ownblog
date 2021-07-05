@@ -154,7 +154,19 @@ def setup():
             set_config('instagram', instagram)    
             set_config('youtube',   youtube)
             set_config('github',    github)
-            # SNS Open setting is not 
+
+            # SNS Open setting
+            facebook_open   = request.form.get("facebook_open")
+            twitter_open    = request.form.get("twitter_open")
+            instagram_open  = request.form.get("instagram_open")
+            youtube_open    = request.form.get("youtube_open")
+            github_open     = request.form.get("github_open")
+            
+            set_config('facebook_open',  facebook_open)
+            set_config('twitter_open',   twitter_open)
+            set_config('instagram_open', instagram_open)
+            set_config('youtube_open',   youtube_open)
+            set_config('github_open',    github_open)
 
             # Image Upload Directory ------------------------------
             upload_dir  = safe_join(app.root_path, 'static', 'front')
