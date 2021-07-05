@@ -87,6 +87,7 @@
                   About Post
                 </label>
                 <select class="form-control" name="about_post_idx">
+                  <option value="">Select post on `About`</option>
                   {% for post in posts %}
                   <option value="{{post.idx}}" {% if get_config('about_post_idx') == post.idx %} selected {% endif %}>{{post.title}}</option>
                   {% endfor %}

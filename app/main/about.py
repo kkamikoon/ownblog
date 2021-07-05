@@ -13,7 +13,7 @@ from app.main           import main
 
 @main.route("/about", methods=['GET'])
 def about():
-    about = Posts.query.filter_by(idx=get_config("about_post")).first()
+    about = Posts.query.filter_by(idx=get_config("about_post_idx")).first()
 
     if about == None:
         return render_template( f"/front/{get_config('front_theme')}/main/about.html",
