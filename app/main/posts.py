@@ -14,7 +14,7 @@ def posts():
     posts           = Posts.query.limit(5).all()
     
     return render_template(f"/front/{get_config('front_theme')}/posts/index.html",
-                            path=[],
+                            path='',
                             posts=posts)
 
 

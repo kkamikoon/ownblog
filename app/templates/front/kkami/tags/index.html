@@ -3,6 +3,14 @@
 
 <div class="row">
   <div class="p-5 mb-4 bg-dark col-md-12">
+    <div class="container-fluid py-3">
+      <form action="/tags" method="POST">
+        <div class="row">
+          <input type="text" class="tagin col-md-11" name="selected_tags" value="{{selected_tags}}" autocomplete="off" data-separator=" " required>
+          <button type=submit class="btn btn-outline-secondary btn-sm col-md-1">Go</button>
+        </div>
+      </form>
+    </div>
   {% for post in posts %}
     <div class="container-fluid py-3">
       <a href="/posts/{{post.idx}}">

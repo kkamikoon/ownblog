@@ -3,17 +3,48 @@
     <script src="{{url_for('main.themes', theme='front', vendor=get_config('front_theme'), path='js/bootstrap.min.js')}}"></script>
     <!-- <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/highlight.min.js"></script> -->
     <script src="{{url_for('main.themes', theme='front', vendor=get_config('front_theme'), path='plugins/highlight.js/js/highlight.pack.js')}}"></script>
+    <script src="{{url_for('main.themes', theme='front', vendor=get_config('front_theme'), path='plugins/vanilla-tagin/js/tagin.js')}}"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
     {% if current_endpoint() in ['main.tags', 'main.posts'] %}
-    <!-- Tag button - searching -->
+    <!-- Tagin -->
     <script>
-      function select_tags(tag_name){
-        {%-if 'tags' in path-%}
-        location.href='{{path}}' + tag_name;
-        {%-else-%}
-        location.href='/tags/{{path}}' + tag_name;
-        {%-endif-%}
+      for(const el of document.querySelectorAll('.tagin')){
+        tagin(el);
+      }
+      // tagin(document.querySelectorAll('.tagin')[0]) // one tag
+    </script>
+
+    <script>
+      function select_tags(new_tag){
+        tags    = "";
+        selected= document.getElementsByClassName("tagin-tag");
+
+        for(var i=0; i < selected.length; i++ ){
+          // console.log(selected[i].innerText);
+          tags += selected[i].innerText + " "
+        }
+
+        // add new tag on selected tag list
+        tags   += new_tag
+
+        // Form submit action
+        var form = document.createElement("form");
+        form.setAttribute("charset","utf-8");
+        form.setAttribute("method", "POST");
+        form.setAttribute("action", "/tags");
+
+        var hf   = document.createElement("input");
+        hf.setAttribute(  "type",   "hidden");
+        hf.setAttribute(  "name",   "selected_tags");
+        hf.setAttribute(  "value",  tags);
+
+        form.appendChild(hf);
+
+        document.body.appendChild(form);
+
+        form.submit();
+
       }
     </script>
     {% endif %}
