@@ -11,7 +11,7 @@ from app.main           import main
 
 @main.route("/posts", methods=['GET'])
 def posts():
-    posts           = Posts.query.limit(5).all()
+    posts           = Posts.query.filter_by(hidden=False).limit(5).all()
     
     return render_template(f"/front/{get_config('front_theme')}/posts/index.html",
                             path='',
