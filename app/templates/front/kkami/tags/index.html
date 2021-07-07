@@ -11,19 +11,24 @@
         </div>
       </form>
     </div>
-  {% for post in posts %}
+    {% if posts | length == 0 %}
+    <div class="py-5 text-center">
+      <h1 class="display-5 fw-bold text-white">No matched post</h1>
+    </div>
+    {% endif %}
+
+    {% for post in posts %}
     <div class="container-fluid py-3">
-      <a href="/posts/{{post.idx}}">
-        <h3 class="display-8 fw-bold">{{post.title}}</h3>
-      </a>
-      <!-- <p class="fs-6 ms-2">- {{post.abstract}}</p> -->
+      <h3 class="display-8 fw-bold">
+        <a href="/posts/{{post.idx}}">{{post.title}}</a>
+      </h3>
       <p>
         {% for tag in get_tags(post.idx) %}
         <button type=button class="btn btn-outline-secondary btn-sm" onclick="javascript:select_tags('{{tag.name}}')">#{{tag.name}}</button>
         {% endfor %}
       </p>
     </div>
-  {% endfor %}
+    {% endfor %}
   </div>
 </div>
 
