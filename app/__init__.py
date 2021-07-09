@@ -1,28 +1,13 @@
 import os
 
 # Cache
-from app.cache import cache
+from app.cache  import cache
 
 # Utilities
-from app.utils import (
+from app.utils  import (
     set_config,
     get_config
 )
-
-from app.utils.initialization   import (
-    init_template_globals,
-    init_request_processors
-)
-
-# Flask ReCaptcha
-from flask_recaptcha            import  ReCaptcha
-
-# Markdown(Flask Misaka)
-from flask_misaka       import Misaka
-
-# SQLAlchemy && Migrations
-from sqlalchemy                 import create_engine 
-from app.utils.migrations       import migrations, create_database
 
 # Models
 from app.models import (
@@ -32,8 +17,8 @@ from app.models import (
 )
 
 # Flask
-from jinja2 import FileSystemLoader
-from flask  import (
+from jinja2     import FileSystemLoader
+from flask      import (
     Flask,
     request,
     session,
@@ -45,10 +30,25 @@ from flask  import (
     flash
 )
 
-# Redis
-from app.utils.security import redis
+from app.utils.initialization   import (
+    init_template_globals,
+    init_request_processors
+)
 
-from app.utils.config   import is_setup, set_email, get_email
+# Flask ReCaptcha
+from flask_recaptcha            import  ReCaptcha
+
+# Markdown(Flask Misaka)
+from flask_misaka               import Misaka
+
+# SQLAlchemy && Migrations
+from sqlalchemy                 import create_engine 
+from app.utils.migrations       import migrations, create_database
+
+# Redis
+from app.utils.security         import redis
+
+from app.utils.config           import is_setup, set_email, get_email
 
 # Global Variables
 recaptcha   = ReCaptcha()
