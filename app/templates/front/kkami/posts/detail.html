@@ -2,6 +2,14 @@
 {% block main %}
 
 <div class="py-5">
+  <div class="col-lg-10 mx-auto">
+    <h1 class="display-6 fw-bold text-white">
+      {{title}}
+    </h1>
+    <p class="fs-5 mb-4">
+      {{abstract}}
+    </p>
+  </div>
   <div class="col-lg-10 mx-auto markdown-style">
     {{post | markdown}}
   </div>

@@ -99,6 +99,7 @@ class Posts(db.Model):
     filename        = db.Column(db.String(512), unique=True)
     fullpath        = db.Column(db.String(2048))
     hidden          = db.Column(db.Integer,     default=True)
+    update          = db.Column(db.DateTime,    default=datetime.datetime.utcnow)
     date            = db.Column(db.DateTime,    default=datetime.datetime.utcnow)
 
 

@@ -10862,7 +10862,7 @@ textarea.form-control-lg {
 .markdown-style{
   background-color: rgba(255,255,255,0.05);
   padding: 2rem 1rem 10rem 1rem;
-  border-radius: 1rem;
+  border-radius: 0.75rem;
 }
 
 .markdown-style img{

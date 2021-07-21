@@ -26,16 +26,25 @@
     </div>
     {% for post in posts %}
     <div class="container-fluid py-3">
-      <p class="display-8 mb-1 fw-bold d-inline-block">
-        <a href="/posts/{{post.idx}}" class="">
-          {{post.title}}
-        </a>
-      </p>
-      <p>
-        {% for tag in get_tags(post.idx) %}
-        <button type=button class="btn btn-outline-secondary btn-sm" onclick="javascript:select_tags('{{tag.name}}')">#{{tag.name}}</button>
-        {% endfor %}
-      </p>
+      <div class="row">
+        <div class="col-md-2">
+          <p class="display-8 fw-bold d-inline-block">
+            {{post.date.strftime("%Y-%m-%d")}}
+          </p>
+        </div>
+        <div class="col-md-10">
+          <p class="display-8 mb-2 fw-bold d-inline-block">
+            <a href="/posts/{{post.idx}}" class="">
+              {{post.title}}
+            </a>
+          </p>
+          <p class="my-0">
+            {% for tag in get_tags(post.idx) %}
+            <button type=button class="btn btn-outline-secondary btn-sm" onclick="javascript:select_tags('{{tag.name}}')">#{{tag.name}}</button>
+            {% endfor %}
+          </p>
+        </div>
+      </div>
     </div>
     {% endfor %}
     {% if counts > get_config('post_page_size') %}

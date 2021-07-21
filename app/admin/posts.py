@@ -1,4 +1,5 @@
 import shutil
+from datetime import datetime
 
 from flask  import current_app as app
 from flask  import (
@@ -220,6 +221,7 @@ def posts_detail(post_idx):
         post.abstract           = abstract
         post.filename           = file_for_upload.split("/")[-1]
         post.fullpath           = file_for_upload
+        post.update             = datetime.now()
 
         try:
             db.session.commit()
