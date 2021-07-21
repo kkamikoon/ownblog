@@ -48,3 +48,19 @@
       }
     </script>
     {% endif %}
+
+    {% if current_endpoint() in ['main.categories'] %}
+    <!-- Categories -->
+    <script>
+      function select_category(category_idx){
+        $.ajax({
+          type:   "GET",
+          url:    "/categories/" + category_idx,
+          cache:  false,
+          success:function(html){
+            
+          }
+        });
+      }
+    </script>
+    {% endif %}

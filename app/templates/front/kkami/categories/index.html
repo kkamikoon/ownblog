@@ -8,7 +8,7 @@
       <ul class="list-unstyled ps-0">
         {% for category in all_categories %}
         <li class="mb-1">
-          <a href="#" class="fs-5 btn-toggle-dark text-capitalize">
+          <a href="/categories/{{category.idx}}" class="fs-5 btn-toggle-dark text-capitalize">
             <i class="bi bi-arrow-right me-2"></i>{{category.name}}
           </a>
           {% if category.subs | length != 0 %}
@@ -16,7 +16,7 @@
           <ul class="btn-toggle-nav-dark list-unstyled fw-normal pb-1 small">
             {% for sub in category.subs %}
             <li class="fs-5">
-              <a href="#">
+              <a href="/categories/sub/{{sub.idx}}">
                 <i class="bi bi-arrow-return-right me-2"></i> {{sub.name}}
               </a>
             </li>

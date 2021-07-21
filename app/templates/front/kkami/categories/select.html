@@ -1,29 +1,18 @@
 {% extends '/front/' + get_config('front_theme') + '/main/layout.html' %}
 {% block main %}
 
-{% if posts | length == 0 %}
-<div class="bg-dark text-secondary px-4 py-5 text-center">
-  <div class="py-5">
-    <h1 class="display-5 fw-bold text-white">None posts</h1>
-    <div class="col-lg-6 mx-auto">
-      <p class="fs-5 mb-4">
-        No posts yet....
-      </p>
-    </div>
-  </div>
+<div class="bg-dark text-secondary py-3 text-center">
+  <h3 class="fw-bold text-white">
+    {% if current_endpoint() == "main.category_select" %}
+    Category : {{name}}
+    {% else %}
+    Sub Category : {{name}}
+    {% endif %}
+  </h3>
 </div>
 
-{% else %}
 <div class="row">
   <div class="p-5 mb-4 bg-dark col-md-12">
-    <div class="container-fluid py-3">
-      <form action="/tags" method="POST">
-        <div class="row">
-          <input type="text" class="tagin col-md-11" name="selected_tags" value="" autocomplete="off" data-separator=" " required>
-          <button type=submit class="btn btn-outline-secondary btn-sm col-md-1">Go</button>
-        </div>
-      </form>
-    </div>
     {% for post in posts %}
     <div class="container-fluid py-3">
       <h3 class="display-8 fw-bold">
@@ -36,6 +25,7 @@
       </p>
     </div>
     {% endfor %}
+
     {% if counts > get_config('post_page_size') %}
     <nav>
       <ul class="pagination justify-content-center">
@@ -55,8 +45,5 @@
     {% endif %}
   </div>
 </div>
-{% endif %}
-
-
 
 {% endblock %}

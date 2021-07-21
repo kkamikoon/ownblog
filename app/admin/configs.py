@@ -32,6 +32,7 @@ def configs():
                             attaches=attaches )
 
 
+
 @admin.route("/admin/configs/web", methods=['POST'])
 @admin_only
 def configs_web():
@@ -65,11 +66,15 @@ def configs_web():
     # About Post
     # User can only connect this domain if you `domain_check` set True
     about_post_idx  = request.form.get("about_post_idx", type=int, default=None)
-
     set_config('about_post_idx',  about_post_idx)
+
+    # Post page size
+    post_page_size  = request.form.get("post_page_size", type=int, default=None)
+    set_config('post_page_size',  post_page_size)
 
     return redirect(url_for("admin.configs"))
     
+
 
 @admin.route("/admin/configs/users", methods=['POST'])
 @admin_only
@@ -84,6 +89,7 @@ def configs_users():
     set_config("user_attach_idx", user_attach_idx)
     
     return redirect(url_for("admin.configs"))
+
 
 
 @admin.route("/admin/configs/users/<config_type>", methods=['GET'])
@@ -115,6 +121,7 @@ def configs_users_default(config_type):
     return "No"
 
 
+
 @admin.route("/admin/configs/domain", methods=['POST'])
 @admin_only
 def configs_domain():    
@@ -143,6 +150,7 @@ def configs_sns():
     set_config('github',    github)
 
     return redirect(url_for("admin.configs"))
+
 
 
 @admin.route("/admin/configs/sns/<sns_type>", methods=['GET'])

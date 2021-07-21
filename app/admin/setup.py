@@ -179,6 +179,11 @@ def setup():
             # post directory setup
             if not os.path.isdir(upload_dir + "/posts"):
                 os.mkdir(upload_dir + "/posts")
+
+
+            # Post page size
+            post_page_size  = request.form.get("post_page_size", type=int, default=None)
+            set_config('post_page_size',  post_page_size)
                 
             # Setup completed
             set_config("setup", True)
