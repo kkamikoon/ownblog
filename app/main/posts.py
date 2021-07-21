@@ -19,7 +19,10 @@ def posts():
         return redirect(url_for(".posts"))
 
     # Case of post pages    
-    posts  = Posts.query.filter_by(hidden=False).offset((page-1) * get_config("post_page_size")).limit(get_config("post_page_size")).all()
+    posts  = Posts.query.filter_by(hidden=False).order_by(Posts.idx.desc())\
+                                                .offset((page-1) * get_config("post_page_size"))\
+                                                .limit(get_config("post_page_size"))\
+                                                .all()
     
     counts = int(Posts.query.filter_by(hidden=False).count() / get_config("post_page_size"))
 

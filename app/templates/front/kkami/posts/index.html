@@ -26,9 +26,11 @@
     </div>
     {% for post in posts %}
     <div class="container-fluid py-3">
-      <h3 class="display-8 fw-bold">
-        <a href="/posts/{{post.idx}}">{{post.title}}</a>
-      </h3>
+      <p class="display-8 mb-1 fw-bold d-inline-block">
+        <a href="/posts/{{post.idx}}" class="">
+          {{post.title}}
+        </a>
+      </p>
       <p>
         {% for tag in get_tags(post.idx) %}
         <button type=button class="btn btn-outline-secondary btn-sm" onclick="javascript:select_tags('{{tag.name}}')">#{{tag.name}}</button>

@@ -42,8 +42,10 @@ def category_select(category_idx):
 
     # Case of post pages 
     posts   = Posts.query.filter_by(category_idx=category.idx,
-                                    hidden=False ).offset((page-1) * get_config("post_page_size")).\
-                                                   limit(get_config("post_page_size")).all()
+                                    hidden=False ).order_by(Posts.idx.desc())\
+                                                  .offset((page-1) * get_config("post_page_size"))\
+                                                  .limit(get_config("post_page_size"))\
+                                                  .all()
                             
     # Page count
     counts  = int(Posts.query.filter_by(category_idx=category.idx,
@@ -70,8 +72,10 @@ def sub_category_select(sub_category_idx):
 
     # Case of post pages 
     posts   = Posts.query.filter_by(sub_category_idx=sub_category.idx,
-                                    hidden=False ).offset((page-1) * get_config("post_page_size")).\
-                                                   limit(get_config("post_page_size")).all()
+                                    hidden=False ).order_by(Posts.idx.desc())\
+                                                  .offset((page-1) * get_config("post_page_size"))\
+                                                  .limit(get_config("post_page_size"))\
+                                                  .all()
                             
     # Page count
     counts  = int(Posts.query.filter_by(sub_category_idx=sub_category.idx,
