@@ -35,5 +35,4 @@ def contact():
         return "Sorry... unable to send your email. :("
     
     abort(500)
-    
-    
+

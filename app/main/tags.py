@@ -57,3 +57,4 @@ def tags():
                                 selected_tags=" ".join(ordered_tags))
     
     return render_template( f"/front/{get_config('front_theme')}/tags/index.html" )
+

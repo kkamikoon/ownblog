@@ -28,6 +28,7 @@ from app.main   import posts
 from app.main   import categories
 from app.main   import tags
 
+
 @main.route("/", methods=['GET'])
 def index():
     return render_template( f"/front/{get_config('front_theme')}/main/index.html" )
@@ -60,7 +61,7 @@ def image(img):
         return send_file(filename)
     else:
         abort(404)
-    
+
 
 @main.route("/static/<theme>/images/<img>")
 def post_image(theme, img):
@@ -70,7 +71,4 @@ def post_image(theme, img):
         return send_file(filename)
     else:
         abort(404)
-
-
-
 

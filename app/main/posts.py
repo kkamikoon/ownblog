@@ -33,12 +33,12 @@ def posts():
                             page=page )
 
 
-
 @main.route("/posts/<post_idx>", methods=['GET'])
 def post_detail(post_idx):
     post = Posts.query.filter_by(idx=post_idx).first()
-
+    
     return render_template( f"/front/{get_config('front_theme')}/posts/detail.html",
                             post=get_markdown(post.fullpath),
                             title=post.title,
-                            abstract=post.abstract)
+                            abstract=post.abstract )
+

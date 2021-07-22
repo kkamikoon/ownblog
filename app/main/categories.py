@@ -17,21 +17,20 @@ def categories():
     all_categories  = []
 
     for category in categories:
-        tmp = {}
-        tmp['idx']    = category.idx
-        tmp['name']   = category.name
-        tmp['subs']   = [sub for sub in subcategories if sub.category_idx == category.idx ]
+        tmp         = {}
+        tmp['idx']  = category.idx
+        tmp['name'] = category.name
+        tmp['subs'] = [ sub for sub in subcategories if sub.category_idx == category.idx ]
 
         all_categories.append(tmp)
     
-    return render_template(f"/front/{get_config('front_theme')}/categories/index.html",
-                            all_categories=all_categories)
-
+    return render_template( f"/front/{get_config('front_theme')}/categories/index.html",
+                            all_categories=all_categories )
 
 
 @main.route("/categories/<int:category_idx>", methods=['GET'])
 def category_select(category_idx):
-    page    = request.args.get("page", default=1, type=int)
+    page    = request.args.get("page",  default=1,  type=int)
 
     category= Categories.query.filter_by(   idx=category_idx,
                                             hidden=False ).first()
@@ -58,7 +57,6 @@ def category_select(category_idx):
                             page=page )
 
 
-
 @main.route("/categories/sub/<int:sub_category_idx>", methods=['GET'])
 def sub_category_select(sub_category_idx):
     page        = request.args.get("page", default=1, type=int)
@@ -76,13 +74,14 @@ def sub_category_select(sub_category_idx):
                                                   .offset((page-1) * get_config("post_page_size"))\
                                                   .limit(get_config("post_page_size"))\
                                                   .all()
-                            
+    
     # Page count
     counts  = int(Posts.query.filter_by(sub_category_idx=sub_category.idx,
                                         hidden=False).count() / get_config("post_page_size"))
     
-    return render_template(f"/front/{get_config('front_theme')}/categories/select.html",
+    return render_template( f"/front/{get_config('front_theme')}/categories/select.html",
                             name=sub_category.name,
                             posts=posts,
                             counts=counts,
                             page=page )
+

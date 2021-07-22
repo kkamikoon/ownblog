@@ -10885,3 +10885,8 @@ textarea.form-control-lg {
 .max-width-control {
   max-width: 1100px;
 }
+
+/* Posts */
+.post-tag-button {
+  font-size: 0.2rem !important;
+}

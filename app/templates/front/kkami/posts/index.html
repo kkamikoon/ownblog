@@ -12,7 +12,6 @@
     </div>
   </div>
 </div>
-
 {% else %}
 <div class="row">
   <div class="p-5 mb-4 bg-dark col-md-12">
@@ -33,14 +32,14 @@
           </p>
         </div>
         <div class="col-md-10">
-          <p class="display-8 mb-2 fw-bold d-inline-block">
-            <a href="/posts/{{post.idx}}" class="">
+          <p class="display-8 mb-1 fw-bold d-inline-block">
+            <a href="/posts/{{post.idx}}">
               {{post.title}}
             </a>
           </p>
           <p class="my-0">
             {% for tag in get_tags(post.idx) %}
-            <button type=button class="btn btn-outline-secondary btn-sm" onclick="javascript:select_tags('{{tag.name}}')">#{{tag.name}}</button>
+            <button type=button class="btn btn-outline-secondary btn-sm post-tag-button" onclick="javascript:select_tags('{{tag.name}}')">#{{tag.name}}</button>
             {% endfor %}
           </p>
         </div>
