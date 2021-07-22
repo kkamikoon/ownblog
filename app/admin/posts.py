@@ -122,8 +122,6 @@ def posts_add():
                         abstract=abstract,
                         filename=file_for_upload.split("/")[-1],
                         fullpath=file_for_upload)
-                        
-        print(f"[=] post : {post}")
 
         try:
             db.session.add(post)
@@ -318,9 +316,6 @@ def posts_detail(post_idx):
         
     # GET Method
     body = open(post.fullpath, "r", encoding="utf-8").read()
-
-    print(post.category_idx)
-    print(post.sub_category_idx)
 
     return render_template( f"/admin/{get_config('admin_theme')}/contents/posts_detail.html",
                             post=post,
