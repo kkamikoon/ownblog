@@ -1,15 +1,15 @@
-MAIN_WEB_DOMAIN="kkamikoon.com" 
-MAIN_WEB_DIR="/var/www/main_web";
+BLOG_DOMAIN="example.com" 
+BLOG_DIR="/your/directory/of/blog";
 
 service apache2 stop
 
-rm -rf ${MAIN_WEB_DIR}/ssl/${MAIN_WEB_DOMAIN}
-rm -rf /etc/letsencrypt/archive/${MAIN_WEB_DOMAIN}
-rm -rf /etc/letsencrypt/live/${MAIN_WEB_DOMAIN}
-rm -rf /etc/letsencrypt/renewal/${MAIN_WEB_DOMAIN}
+rm -rf ${BLOG_DIR}/ssl/${BLOG_DOMAIN}
+rm -rf /etc/letsencrypt/archive/${BLOG_DOMAIN}
+rm -rf /etc/letsencrypt/live/${BLOG_DOMAIN}
+rm -rf /etc/letsencrypt/renewal/${BLOG_DOMAIN}
 
-letsencrypt certonly --standalone -d ${MAIN_WEB_DOMAIN}
+letsencrypt certonly --standalone -d ${BLOG_DOMAIN}
 
-cp -r /etc/letsencrypt/archive/${MAIN_WEB_DOMAIN}/* ${MAIN_WEB_DIR}/ssl/
+cp -r /etc/letsencrypt/archive/${BLOG_DOMAIN}/* ${BLOG_DIR}/ssl/
 
 service apache2 start

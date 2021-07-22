@@ -2,29 +2,40 @@
 
 ## Ubuntu 18.04 ~
 
-만약 ubuntu 18.04 혹은 그 이상의 버전을 사용하신다면 아래의 방법으로 라이브러리를 설치할 수 있습니다.
+- 만약 ubuntu 18.04 혹은 그 이상의 버전을 사용하신다면 아래의 방법으로 라이브러리를 설치할 수 있습니다.
 
-```bash
-apt update -y
-apt install -y apache2 letsencrypt redis python3-pip mysql-server libapache2-mod-wsgi-py3 libapache2-mod-log-sql-mysql
-```
+    ```bash
+    apt update -y
+    apt install -y apache2 letsencrypt redis python3-pip mysql-server libapache2-mod-wsgi-py3 libapache2-mod-log-sql-mysql
+    ```
 
 ## Python3 requirements install
 
-```bash
-python3 -m pip install --upgrade
-pip3 install redis flask flask_migrate flask_sqlalchemy Flask-Mail flask_caching flask_socketio flask-recaptcha sqlalchemy sqlalchemy_utils pymysql flask_misaka
-```
+- Python3 모듈 설치(option 1)
+
+    ```bash
+    python3 -m pip install --upgrade
+    pip3 install redis flask flask_migrate flask_sqlalchemy Flask-Mail flask_caching flask_socketio flask-recaptcha sqlalchemy sqlalchemy_utils pymysql flask_misaka
+    ```
+
+- Python3 모듈 설치(option 2)
+
+    ```bash
+    python3 -m pip install --upgrade
+    pip3 install -r requirements.txt
+    ```
 
 ## Create mysql default user
 
-```bash
-$ sudo mysql -u root < user.sql
-```
+- MySQL 계정 생성
 
-웹 설정을 위해 blog MySQL 계정을 추가해야 합니다. 하지만 보안을 위해서 기본으로 제공된 계정 정보를 변경하여 구동하는 것을 추천드립니다. 계정 정보는 `app/config.py`와 `user.sql` 파일의 내용을 수정하시면 됩니다.
+    ```bash
+    $ sudo mysql -u root < user.sql
+    ```
 
-- **app/config.py**
+    웹 설정을 위해 blog MySQL 계정을 추가해야 합니다. 하지만 보안을 위해서 기본으로 제공된 계정 정보를 변경하여 구동하는 것을 추천드립니다. 계정 정보는 `app/config.py`와 `user.sql` 파일의 내용을 수정하시면 됩니다.
+
+- app/config.py
 
     ```python
     import os
@@ -61,7 +72,7 @@ $ sudo mysql -u root < user.sql
         # ....
     ```
 
-- **user.sql**
+- user.sql
 
     ```sql
     CREATE USER 'blog'@'localhost' IDENTIFIED BY 'blog';
@@ -69,42 +80,69 @@ $ sudo mysql -u root < user.sql
     FLUSH PRIVILEGES;
     ```
 
-## Init Flask
+## Initiate Flask
 
-I recommand the reverse proxy setting. If you use web server like apache2 or nginx, you need to use wsgi(or uwsgi) or gunicorn or something. 
+- Flask를 구동하기 위해서는 Reverse Proxy를 설정하시는 것을 추천드립니다. 만약 여러분께서 `Apache2`나 `Nginx` 등의 웹 서버를 통해 Reverse Proxy를 설정하고자 한다면 `WSGI(혹은 uWSGI)` 혹은 `Gunicorn`과 같은 모듈이 필요합니다.
 
-```bash
-python3 run.py
-```
+    ```python
+    # wsgi.py (for apache2 mod_wsgi)
+    import sys
+    sys.path.insert(0, '/your/directory/of/blog')
+    from app import create_app
 
+    application = create_app()
+    ```
+
+- 하지만 `일단 구동`을 원하신다면 아래와 같은 명령어를 통해 구동이 가능합니다.
+
+    ```bash
+    $ python3 run.py
+    ```
+
+    포트번호는 아래의 파일에서 변경할 수 있습니다.
+
+    ```python
+    # run.py (for `quick stark` or debugging)
+    from app import create_app
+
+    app     = create_app()
+
+    if __name__ == "__main__":
+        app.run(debug=True,
+                threaded=True,
+                host="0.0.0.0",
+                port=80)
+    ```
 # 2. Web Server setting(Apache2)
 
 ## Add apache2 envvar value
 
-```
-'''
-export BLOG_DIR=/var/www/blog/
-'''
-```
+- 설정 파일 `blog.conf` 작성된 BLOG_DIR의 환경값을 설정하도록 합니다. 이 값은 `/etc/apache2/envvar` 파일에 한 줄 삽입하면 됩니다.
 
-This is apache2 environment value that it helps you to configure your config file(like wol.conf). This value can be written on `/etc/apache2/envvar`
+    ```
+    ...
+    export BLOG_DIR=/your/directory/of/blog/
+    ...
+    ```
 
 ## Add apache2 module
 
-```
-sudo a2enmod rewrite
-sudo a2enmod wsgi
-sudo a2enmod ssl
-```
+- Apache2 서비스를 온전히 실행시키기 위해서는 위의 세 가지 모듈을 enable 상태로 만들어야 합니다.
 
-You should enable these modules, if you want to init apache2 service.
+    ```
+    sudo a2enmod rewrite
+    sudo a2enmod wsgi
+    sudo a2enmod ssl
+    ```
 
-- rewrite : One of apache2 module what makes your request forward to other URL or File.
+- rewrite : Apache2 모듈 중 하나로, 들어온 요청(Request)을 다른 URL 혹은 파일로 포워딩합니다.
+
     - RewriteEngine
     - RewriteCond
     - RewriteRule
     - etc
-- WSGI : One of apache2 module that it makes you can use 'kind of WSGI configuration' on your apache2 config files. This module can install using apt-get(or apt)
+
+- WSGI : Apache2 모듈 중 하나로, WSGI 설정을 사용할 수 있도록 합니다. 이 모듈은 apt 명령어로 설치가 가능하며, 라이브러리 이름은 다음과 같습니다.
 
     Library name : `libapache2-mod-wsgi-py3`
 
@@ -113,7 +151,8 @@ You should enable these modules, if you want to init apache2 service.
     - WSGIApplicationGroup
     - etc.
 
-- ssl : One of apache2 module that it makes you can use SSL configuration in your apache2 config files
+- ssl : Apache2 모듈 중 하나로 conf 파일 내에 SSL 설정이 가능하도록 합니다.
+
     - SSLCertificateFile
     - SSLCertificateKeyFile
     - SSLCertificateChainFile
@@ -121,12 +160,12 @@ You should enable these modules, if you want to init apache2 service.
 
 ## Add apache2 conf
 
-```
-sudo a2ensite blog
-sudo a2dissite 000-default
-```
+- 주어진 설정 파일(blog.conf)를 반드실 enable 상태로 변경해야 합니다. 또한 기본으로 실행되어 있는 설정파일(000-default.conf)를 disable 시켜야 합니다.
 
-Your configuration file(blog.conf) should be ensited, and should dissite default config file(000-default.conf)
+    ```
+    sudo a2ensite blog
+    sudo a2dissite 000-default
+    ```
 
 # 3. Licenses
 
