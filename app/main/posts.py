@@ -35,7 +35,12 @@ def posts():
 
 @main.route("/posts/<post_idx>", methods=['GET'])
 def post_detail(post_idx):
-    post = Posts.query.filter_by(idx=post_idx).first()
+    post    = Posts.query.filter_by(idx=post_idx,
+                                    hidden=False).first()
+
+    if post == None:
+        flash(message="None valid post selected.", category="error")
+        return redirect(url_for(".posts"))
     
     return render_template( f"/front/{get_config('front_theme')}/posts/detail.html",
                             post=get_markdown(post.fullpath),

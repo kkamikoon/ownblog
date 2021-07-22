@@ -1,14 +1,14 @@
 /* lioshi Theme */
 /* Original theme - https://github.com/lioshi/vscode-lioshi-theme */
 
-@font-face{
+/* @font-face{
   font-family:"neodgm";
   font-style:normal;
   font-weight:400;
   font-feature-settings:"liga","tnum","case","calt","zero","ss01","locl";
   src:url(../../../fonts/neodgm_code.woff2) format("woff2");
   font-display:swap
-}
+} */
 
 /* Comment */
 .hljs-comment {
@@ -82,7 +82,7 @@
   background: #212020;
   color: #c5c8c6;
   padding: 0.5em;
-  font-family: neodgm;
+  font-family: inherit;
 }
 
 .hljs-emphasis {
