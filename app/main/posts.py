@@ -1,3 +1,5 @@
+from math   import ceil
+
 from flask  import current_app as app
 from flask  import (
     render_template,
@@ -27,7 +29,9 @@ def posts():
                                                 .limit(get_config("post_page_size"))\
                                                 .all()
     
-    counts = int(Posts.query.filter_by(hidden=False).count() / get_config("post_page_size"))
+    counts = ceil(Posts.query.filter_by(hidden=False).count() / get_config("post_page_size"))
+
+    print(counts)
 
     return render_template( f"/front/{get_config('front_theme')}/posts/index.html",
                             path='',

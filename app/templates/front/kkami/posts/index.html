@@ -46,7 +46,7 @@
       </div>
     </div>
     {% endfor %}
-    {% if counts > get_config('post_page_size') %}
+    {% if counts > 1 %}
     <nav>
       <ul class="pagination justify-content-center">
         <li class="page-item {% if page == 1 %}disabled{% endif %}">

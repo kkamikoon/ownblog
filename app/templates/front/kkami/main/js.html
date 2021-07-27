@@ -7,7 +7,7 @@
     
     <script>hljs.initHighlightingOnLoad();</script>
 
-    {% if current_endpoint() in ['main.tags', 'main.posts'] %}
+    {% if current_endpoint() in ['main.tags', 'main.posts', 'main.category_select'] %}
     <!-- Tagin -->
     <script>
       for(const el of document.querySelectorAll('.tagin')){
