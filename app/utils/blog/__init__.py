@@ -68,7 +68,7 @@ def get_post_upload_path(title):
 
     :return:        safe joined root path of post directory
     """
-    return get_config("upload_dir") + f"/posts/{title.replace(' ', '_')}_{str(uuid4()).replace('-', '_')}.md" 
+    return get_config("upload_dir") + f"/posts/{filename_filtering(title)}_{str(uuid4()).replace('-', '_')}.md" 
 
 
 def get_img_upload_path(title, ext):
@@ -77,7 +77,7 @@ def get_img_upload_path(title, ext):
     
     :return:        safe joined root path of image directory
     """
-    return get_config('upload_dir') + f"/images/{title.replace(' ', '_')}_{str(uuid4()).replace('-', '_')}{ext}"
+    return get_config('upload_dir') + f"/images/{filename_filtering(title)}_{str(uuid4()).replace('-', '_')}{ext}"
 
 
 def get_images_path(body):
@@ -134,3 +134,10 @@ def to_route_path(path):
     return path.replace(app.root_path, "").replace("/themes", "")
 
 
+def filename_filtering(filename):
+    filter_list = ["/", '(', ")"]
+    
+    for f in filter_list:
+        filename = filename.replace(f, "_")
+    
+    return filename
