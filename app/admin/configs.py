@@ -80,9 +80,9 @@ def configs_google():
     set_config('recaptcha_status',      recaptcha_status)
 
     # Google Analytics 
-    analytics_id        = request.form.get("analytics_id")
+    google_analytics_id = request.form.get("google_analytics_id")
 
-    set_config('analytics_id',          analytics_id)
+    set_config('google_analytics_id',   google_analytics_id)
     
     return redirect(url_for("admin.configs"))
 

@@ -179,7 +179,7 @@
                 <label>
                   Analytics ID
                 </label>
-                <input type="text" class="form-control" name="analytics_id" value="{% if get_config('analytics_id') != None %}{{get_config('analytics_id')}}{% endif %}" placeholder="Analytics ID">
+                <input type="text" class="form-control" name="google_analytics_id" value="{% if get_config('google_analytics_id') != None %}{{get_config('google_analytics_id')}}{% endif %}" placeholder="Analytics ID">
               </div>
             </div>
             <div class="col-md-4">
@@ -187,7 +187,7 @@
                 <label>
                   On / Off
                 </label>
-                <button type="button" class="btn btn-block btn-outline-{% if get_config('set_analytics') == True %}success{% else %}secondary{% endif %}" onclick="javascript:google_service('analytics');" id="google_analytics">{% if get_config('set_analytics') == True %}On{% else %}Off{% endif %}</button>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('set_google_analytics') == True %}success{% else %}secondary{% endif %}" onclick="javascript:google_service('analytics');" id="google_analytics">{% if get_config('set_google_analytics') == True %}On{% else %}Off{% endif %}</button>
               </div>
             </div>
           </div>
