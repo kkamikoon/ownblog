@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="row">
-  <!-- Web, About configs -->
+  <!-- Web, Domain configs -->
   <div class="col-md-4">
     <!-- Web config -->
     <form action="/admin/configs/web" method="POST">
@@ -57,33 +57,6 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>
-                  reCaptcha Site Key
-                </label>
-                <input type="text" class="form-control" name="recaptcha_site_key" value="" placeholder="Get your site key : https://www.google.com/recaptcha/about/">
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <label>
-                  reCaptcha Secret Key
-                </label>
-                <input type="text" class="form-control" name="recaptcha_secret_key" value="" placeholder="Get your secret key : https://www.google.com/recaptcha/about/">
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <label>
-                  reCaptcha On/Off
-                </label>
-                <select class="form-control" name="recaptcha_status">
-                  <option value="0" {% if get_config('recaptcha_status') == 0 %} selected {% endif %}>False</option>
-                  <option value="1" {% if get_config('recaptcha_status') == 1 %} selected {% endif %}>True</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <label>
                   About Post
                 </label>
                 <select class="form-control" name="about_post_idx">
@@ -112,13 +85,126 @@
             <b>Submit</b>
           </button>
         </div>
+      </div>
+    </form>
+
+    <!-- Domain config -->
+    <form action="/admin/configs/domain" method="POST">
+      <div class="card card-info card-outline">
+        <div class="card-header">
+          <h2 class="card-title">Domain - Configs</h2>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-9">
+              <div class="form-group">
+                <label>
+                  Domain
+                </label>
+                <input type="text" class="form-control" name="domain" value="{% if get_config('domain') != None %}{{get_config('domain')}}{% endif %}" placeholder="example.com">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>
+                  Domain Check
+                </label>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('domain_check') == True %}success{% else %}secondary{% endif %}" onclick="javascript:domain_checking();" id="domain_check">{% if get_config('domain_check') == True %}Checked{% else %}Unchecked{% endif %}</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <p>
+              <u>
+                <em>
+                  Note : If you check the domain 'True', You can only access here using your 'Domain'.
+                </em>
+              </u>
+            </p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="reset" class="btn btn-default">
+            <b>Reset</b>
+          </button>
+          <button type="submit" class="btn btn-warning float-right">
+            <b>Submit</b>
+          </button>
+        </div>
       </div>  
     </form>
+    <!-- ./ -->
   </div>
   <!-- ./ -->
 
   <!-- Users, Domain configs -->
   <div class="col-md-4">
+    <!-- Web google config -->
+    <form action="/admin/configs/google" method="POST">
+      <div class="card card-danger card-outline">
+        <div class="card-header">
+          <h2 class="card-title">WEB - Google</h2>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>
+                  reCaptcha Site Key
+                </label>
+                <input type="text" class="form-control" name="recaptcha_site_key" value="" placeholder="Get your site key : https://www.google.com/recaptcha/about/">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>
+                  reCaptcha Secret Key
+                </label>
+                <input type="text" class="form-control" name="recaptcha_secret_key" value="" placeholder="Get your secret key : https://www.google.com/recaptcha/about/">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>
+                  reCaptcha On/Off
+                </label>
+                <select class="form-control" name="recaptcha_status">
+                  <option value="0" {% if get_config('recaptcha_status') == 0 %} selected {% endif %}>False</option>
+                  <option value="1" {% if get_config('recaptcha_status') == 1 %} selected {% endif %}>True</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="form-group">
+                <label>
+                  Analytics ID
+                </label>
+                <input type="text" class="form-control" name="analytics_id" value="{% if get_config('analytics_id') != None %}{{get_config('analytics_id')}}{% endif %}" placeholder="Analytics ID">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>
+                  On / Off
+                </label>
+                <button type="button" class="btn btn-block btn-outline-{% if get_config('set_analytics') == True %}success{% else %}secondary{% endif %}" onclick="javascript:google_service('analytics');" id="google_analytics">{% if get_config('set_analytics') == True %}On{% else %}Off{% endif %}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="reset" class="btn btn-default">
+            <b>Reset</b>
+          </button>
+          <button type="submit" class="btn btn-warning float-right">
+            <b>Submit</b>
+          </button>
+        </div>
+      </div>  
+    </form>
+    <!-- ./ -->
+
+    <!-- Users Config -->
     <form action="/admin/configs/users" method="POST">
       <div class="card card-success card-outline">
         <div class="card-header">
@@ -186,53 +272,6 @@
           </button>
         </div>
       </div>
-    </form>
-    <!-- ./ -->
-
-    <!-- Domain config -->
-    <form action="/admin/configs/domain" method="POST">
-      <div class="card card-info card-outline">
-        <div class="card-header">
-          <h2 class="card-title">Domain - Configs</h2>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-9">
-              <div class="form-group">
-                <label>
-                  Domain
-                </label>
-                <input type="text" class="form-control" name="domain" value="{% if get_config('domain') != None %}{{get_config('domain')}}{% endif %}" placeholder="example.com">
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>
-                  Domain Check
-                </label>
-                <button type="button" class="btn btn-block btn-outline-{% if get_config('domain_check') == True %}success{% else %}secondary{% endif %}" onclick="javascript:domain_checking();" id="domain_check">{% if get_config('domain_check') == True %}Checked{% else %}Unchecked{% endif %}</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <p>
-              <u>
-                <em>
-                  Note : If you check the domain 'True', You can only access here using your 'Domain'.
-                </em>
-              </u>
-            </p>
-          </div>
-        </div>
-        <div class="card-footer">
-          <button type="reset" class="btn btn-default">
-            <b>Reset</b>
-          </button>
-          <button type="submit" class="btn btn-warning float-right">
-            <b>Submit</b>
-          </button>
-        </div>
-      </div>  
     </form>
     <!-- ./ -->
   </div>

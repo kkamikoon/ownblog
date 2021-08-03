@@ -107,6 +107,9 @@
 
     {% include "/front/" + get_config('front_theme') + "/main/js.html" %}
     {% include "/front/" + get_config('front_theme') + "/main/bootstrap_notify.html" %}
+    {% if get_config("set_google_analytics") %}
+    {% include "/front/" + get_config('front_theme') + "/main/analytics.html" %}
+    {% endif %}
 
   </body>
   <!--

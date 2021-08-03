@@ -191,8 +191,6 @@ $("#sub_categories_table").DataTable({
       url:    "/admin/configs/users/" + config,
       cache:  false,
       success:function(html){
-        console.log(html)
-
         if (html == "No"){
           toastr.error("Error occuring");
         }
@@ -207,6 +205,31 @@ $("#sub_categories_table").DataTable({
           else{
             if (config == "attach") ele.innerText = "Hidden"
             else                    ele.innerText = "Deny"
+            ele.classList.replace("btn-outline-success", "btn-outline-secondary");
+          }
+        }
+      }
+    });
+  }
+
+  function google_service(service_type){
+    $.ajax({
+      type:   "GET",
+      url:    "/admin/configs/google/" + service_type,
+      cache:  false,
+      success:function(html){
+        if (html == "No"){
+          toastr.error("Error occuring");
+        }
+        else{
+          ele = document.getElementById("google_"+service_type);
+          
+          if (html == "True"){
+            ele.innerText = "On"
+            ele.classList.replace("btn-outline-secondary", "btn-outline-success");
+          }
+          else{
+            ele.innerText = "Off"
             ele.classList.replace("btn-outline-success", "btn-outline-secondary");
           }
         }
