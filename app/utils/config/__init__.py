@@ -9,8 +9,8 @@ def is_setup():
 def set_email():
     set_config("mail_server",   "smtp.gmail.com")
     set_config("mail_port",     465)
-    set_config("mail_username", "kkamikoon@gmail.com")
-    set_config("mail_password", "owubcnctfpfbngqh")
+    set_config("mail_username", "[your_email]")
+    set_config("mail_password", "[password]")
     set_config("mail_use_tls",  False)
     set_config("mail_use_ssl",  True)
 
